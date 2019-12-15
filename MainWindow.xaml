@@ -1,0 +1,142 @@
+﻿<Controls:MetroWindow 
+            x:Class="EGOET.MainWindow"
+            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+            xmlns:EGOET="clr-namespace:EGOET"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:local="clr-namespace:EGOET" 
+            UseNoneWindowStyle="true"
+            IgnoreTaskbarOnMaximize="True"
+    
+            Top="0" 
+            Left="0"
+            WindowState="Maximized"
+    
+            Icon="pack://siteoforigin:,,,/Resources/IconMeme.ico" 
+            TitleCharacterCasing="Normal"
+            Loaded="MetroWindow_Loaded" 
+    
+            NonActiveBorderBrush="Black" 
+            Background="Black" 
+            NonActiveWindowTitleBrush="Black" 
+            VerticalAlignment="Stretch"
+    
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"     
+            WindowStartupLocation="Manual" 
+            ResizeMode="NoResize" Height="1080" Width="1920"
+            
+            >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="184"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas Name="Kanva" Grid.Column="0" Margin="0,0,1,1" Grid.RowSpan="2" MaxWidth="1500" MaxHeight="900">
+            <Image Name="Tlo"
+                   VerticalAlignment="Top" Stretch="None" />
+            <Image Name="MCImage"
+                   Width="100" Height="100" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Canvas.Left="738" Canvas.Top="453"/>
+        </Canvas>
+
+        <Canvas Grid.Column="1" Grid.Row="1">
+            <Image Height="100" Canvas.Left="91" Canvas.Top="83" Width="100" />
+
+        </Canvas>
+
+        <WindowsFormsHost Grid.Column="0"  Margin="3,3,9,3" Grid.ColumnSpan="1" Grid.Row="1">
+            <EGOET:SupportSFMLWindow x:Name="DrawSurface"/>
+        </WindowsFormsHost>
+
+        <Image Source="pack://siteoforigin:,,,/Resources/Tlo.png" Margin="0,0,0,0" Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill"/>
+
+        <Grid Grid.Row="0" Grid.Column="0"  Margin="0,0,1,5">
+            <Button Name="ExitBtn" 
+                    Content="Exit" 
+                    Margin="5,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" 
+                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+            <Button Name="ControlsBtn" 
+                    Content="Cont"
+                    HorizontalAlignment="Left" 
+                    Margin="35,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" Width="26"/>
+            <Button Name="OptionsBtn" 
+                    Content="Opt"
+                    Margin="65,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+            <Button Name="MusicBtn" 
+                    Content="Music"
+                    Margin="95,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+            <Button Name="FullscreenModeBtn" 
+                    Content="FS" 
+                    Margin="125,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+            <Button Name="AlarmBtn" 
+                    Content="Ala" 
+                    Margin="155,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+            <Button Name="StoreBtn" 
+                    Content="Store" 
+                    Margin="185,5,0,0" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="0"  Margin="0,3,147,-1">
+            <Button Name="ChatBtn" Content="Chat" Width="30" HorizontalAlignment="Left" Margin="5,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+            <Button Name="KowalBtn" Content="Kow" Width="30" HorizontalAlignment="Left" Margin="40,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+            <Button Name="TownLocBtn" Content="TLoc" Width="30" HorizontalAlignment="Left" Margin="75,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+            <Button Name="WorldLocBtn" Content="WLoc" Width="30" HorizontalAlignment="Left" Margin="110,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+            <Button Name="CalendarBtn" Content="Cal" Width="30" HorizontalAlignment="Left" Margin="145,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+        </Grid>
+
+        <Button Content="Start Game" Grid.Column="1" Margin="30,562,60,0" VerticalAlignment="Top" Click="StartGame_Click" Height="25" Grid.Row="1" RenderTransformOrigin="0.518,0.013"/>
+        <Button Content="X" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,60,0" VerticalAlignment="Top" Width="24" Height="24" FontSize="10" FontWeight="ExtraBlack" Click="Button_Click"/>
+        <ScrollViewer x:Name="AdminScroll" Margin="10,600,10,41" Grid.Row="1"  Grid.Column="1" >
+            <TextBlock x:Name="AdminConsole" 
+                       TextWrapping="Wrap" 
+                       Text="Admin Console..." 
+                       Background="Black" 
+                       FontFamily="Consolas" 
+                       FontSize="10" Foreground="White"
+                       ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                       ScrollViewer.CanContentScroll="True"
+                       
+                       />
+
+        </ScrollViewer>
+        <Button x:Name="AdminButton" Content="RUN
+                " Grid.Column="1" 
+                Margin="147,919,11,10" 
+                Grid.Row="1" 
+                FontSize="6.5" 
+                Click="RunAdminCommand"/>
+        <TextBox x:Name="AdminTextBox" Grid.Column="1" 
+                 HorizontalAlignment="Left" 
+                 Height="23" Margin="10,919,0,0"
+                 Grid.Row="1" 
+                 TextWrapping="Wrap" 
+                 Text="TextBox..." 
+                 VerticalAlignment="Top" 
+                 Width="137" 
+                 FontFamily="Consolas" 
+                 FontSize="10" 
+                 FontStyle="Italic" 
+                 FontWeight="ExtraLight" 
+                 VerticalContentAlignment="Center" 
+                 Background="Black" 
+                 Foreground="White" 
+                 GotFocus="AdminTextBox_GotFocus" LostFocus="AdminTextBox_LostFocus" 
+                 />
+    </Grid>
+</Controls:MetroWindow>
