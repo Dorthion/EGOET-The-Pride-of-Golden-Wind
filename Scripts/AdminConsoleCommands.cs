@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace EGOET
+namespace EGOET.AdminConsole
 {
     public class AdminConsoleCommands
     {
@@ -17,7 +17,7 @@ namespace EGOET
             {
                 while (true)
                 {
-                    Consola.Text += "\nPozycja gracza: " + Kur.player.Xpos + "/" + Kur.player.Ypos;
+                    Consola.Text += "\nPozycja gracza: " + Kur.Getplayer().Xpos + "/" + Kur.Getplayer().Ypos;
                     ScrollAdmin.ScrollToBottom();
                     await Task.Delay(100);
                     if(GetMoveDzialaj == true)

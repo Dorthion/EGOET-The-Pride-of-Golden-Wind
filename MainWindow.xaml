@@ -26,7 +26,16 @@
             ResizeMode="NoResize" Height="1080" Width="1920"
             
             >
-
+    <Window.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="Grid.Row" Value="1"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -37,19 +46,8 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="184"/>
         </Grid.ColumnDefinitions>
-
-        <Canvas Name="Kanva" Grid.Column="0" Margin="0,0,1,1" Grid.RowSpan="2" MaxWidth="1500" MaxHeight="900">
-            <Image Name="Tlo"
-                   VerticalAlignment="Top" Stretch="None" />
-            <Image Name="MCImage"
-                   Width="100" Height="100" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   Canvas.Left="738" Canvas.Top="453"/>
-        </Canvas>
-
         <Canvas Grid.Column="1" Grid.Row="1">
             <Image Height="100" Canvas.Left="91" Canvas.Top="83" Width="100" />
-
         </Canvas>
 
         <WindowsFormsHost Grid.Column="0"  Margin="3,3,9,3" Grid.ColumnSpan="1" Grid.Row="1">
@@ -72,7 +70,8 @@
             <Button Name="OptionsBtn" 
                     Content="Opt"
                     Margin="65,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" 
+                    HorizontalAlignment="Left" Width="26"/>
             <Button Name="MusicBtn" 
                     Content="Music"
                     Margin="95,5,0,0" 
@@ -99,8 +98,7 @@
             <Button Name="CalendarBtn" Content="Cal" Width="30" HorizontalAlignment="Left" Margin="145,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
         </Grid>
 
-        <Button Content="Start Game" Grid.Column="1" Margin="30,562,60,0" VerticalAlignment="Top" Click="StartGame_Click" Height="25" Grid.Row="1" RenderTransformOrigin="0.518,0.013"/>
-        <Button Content="X" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,60,0" VerticalAlignment="Top" Width="24" Height="24" FontSize="10" FontWeight="ExtraBlack" Click="Button_Click"/>
+        <Button Content="X" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,12,0" VerticalAlignment="Top" Width="24" Height="24" FontSize="10" FontWeight="ExtraBlack" Click="Button_Click"/>
         <ScrollViewer x:Name="AdminScroll" Margin="10,600,10,41" Grid.Row="1"  Grid.Column="1" >
             <TextBlock x:Name="AdminConsole" 
                        TextWrapping="Wrap" 
@@ -111,19 +109,17 @@
                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                        ScrollViewer.HorizontalScrollBarVisibility="Visible"
                        ScrollViewer.CanContentScroll="True"
-                       
                        />
-
         </ScrollViewer>
         <Button x:Name="AdminButton" Content="RUN
                 " Grid.Column="1" 
-                Margin="147,919,11,10" 
+                Margin="148,926,10,0" 
                 Grid.Row="1" 
                 FontSize="6.5" 
-                Click="RunAdminCommand"/>
+                Click="RunAdminCommand" Height="26" VerticalAlignment="Top"/>
         <TextBox x:Name="AdminTextBox" Grid.Column="1" 
                  HorizontalAlignment="Left" 
-                 Height="23" Margin="10,919,0,0"
+                 Height="23" Margin="10,926,0,0"
                  Grid.Row="1" 
                  TextWrapping="Wrap" 
                  Text="TextBox..." 
@@ -138,5 +134,31 @@
                  Foreground="White" 
                  GotFocus="AdminTextBox_GotFocus" LostFocus="AdminTextBox_LostFocus" 
                  />
+        <Border Margin="48,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Helm" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="48,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Naszyjnik" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="84,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Rekawiczki" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="12,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Pierscien" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="48,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Torso" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="84,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Tarcza" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="12,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Miecz" Height="30" Width="30"/>
+        </Border>
+        <Border Margin="48,148,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="Buty" Height="30" Width="30"/>
+        </Border>
+
+        <Button Content="Start Game" Grid.Column="1" Margin="30,562,60,0" VerticalAlignment="Top" Click="StartGame_Click" Height="25" Grid.Row="1" RenderTransformOrigin="0.518,0.013"/>
     </Grid>
 </Controls:MetroWindow>

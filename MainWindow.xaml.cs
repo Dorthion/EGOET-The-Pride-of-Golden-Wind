@@ -1,16 +1,17 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
-using SFML.Graphics;
-using SFML.Window;
-using SFML.System;
-using EGOET.Maps;
+﻿using EGOET.AdminConsole;
 using EGOET.Informations;
+using EGOET.Maps;
+using EGOET.Options;
 using MahApps.Metro.Controls;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Windows.Media;
+using EGOET;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace EGOET
 {
@@ -20,9 +21,20 @@ namespace EGOET
         internal RenderWindow _renderWindow = null;
         private Map Mapa;
         private NPC kip;
-        internal Player player { get; private set; }
+        private Player player1;
+
+        internal Player Getplayer()
+        {
+            return player1;
+        }
+
+        private void Setplayer(Player value)
+        {
+            player1 = value;
+        }
+
         public Sprite JakisSprite;
-        private PlayerClass PlayerControler;
+        //private PlayerClass PlayerControler;
         private Clock clock;
         private View view = new View(new Vector2f(0, 0), new Vector2f(1718, 949));
         private RectangleShape ClearRect = new RectangleShape()
@@ -49,7 +61,7 @@ namespace EGOET
 
             Mapa = new Map();
             kip = new NPC();
-            player = new Player();
+            Setplayer(new Player());
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
             CompositionTargetEx.Rendering += Timer_Tick;
             clock = new Clock();
@@ -59,12 +71,12 @@ namespace EGOET
         {
             InitializeComponent();
             clock = new Clock();
-            PlayerControler = _player;
+            //PlayerControler = _player;
 
            // CreateRenderWindow();
         }
 
-        private void CreateRenderWindow()
+        /*private void CreateRenderWindow()
         {
             if (_renderWindow != null)
             {
@@ -78,25 +90,25 @@ namespace EGOET
             //this._renderWindow.KeyPressed += RenderWindow_KeyPressed;
 
             _renderWindow.SetActive(true);
-        }
+        }*/
 
         //Na razie "dla zwiększenia wydajności"
         public static class CompositionTargetEx
         {
             private static TimeSpan _last = TimeSpan.Zero;
-            private static event EventHandler<RenderingEventArgs> _FrameUpdating;
+            private static event EventHandler<RenderingEventArgs> FrameUpdating;
             public static event EventHandler<RenderingEventArgs> Rendering
             {
                 add
                 {
-                    if (_FrameUpdating == null)
+                    if (FrameUpdating == null)
                         CompositionTarget.Rendering += CompositionTarget_Rendering;
-                    _FrameUpdating += value;
+                    FrameUpdating += value;
                 }
                 remove
                 {
-                    _FrameUpdating -= value;
-                    if (_FrameUpdating == null)
+                    FrameUpdating -= value;
+                    if (FrameUpdating == null)
                         CompositionTarget.Rendering -= CompositionTarget_Rendering;
                 }
             }
@@ -106,7 +118,7 @@ namespace EGOET
                 RenderingEventArgs args = (RenderingEventArgs)e;
                 if (args.RenderingTime == _last)
                     return;
-                _last = args.RenderingTime; _FrameUpdating(sender, args);
+                _last = args.RenderingTime; FrameUpdating(sender, args);
             }
         }
 
@@ -118,20 +130,20 @@ namespace EGOET
             this._renderWindow.SetView(view);
 
             //Clear Screen
-            this.ClearRect.Position = new Vector2f(player.Xpos - 1000.0f, player.Ypos - 500.0f);
+            this.ClearRect.Position = new Vector2f(Getplayer().Xpos - 1000.0f, Getplayer().Ypos - 500.0f);
             this._renderWindow.Draw(ClearRect);
 
             //Update State
             this.kip.Update(deltatime);
-            this.player.Update(deltatime);
+            this.Getplayer().Update(deltatime);
 
             //Draw Methods
-            this.Mapa.Draw(_renderWindow, (int)(player.Xpos/32), (int)(player.Ypos/32), 5);
+            this.Mapa.Draw(_renderWindow, (int)(Getplayer().Xpos/32), (int)(Getplayer().Ypos/32), 5);
             this.kip.Draw(_renderWindow);
-            this.player.Draw(_renderWindow);
+            this.Getplayer().Draw(_renderWindow);
 
             //Center View
-            this.view.Center = new Vector2f(player.Xpos, player.Ypos);
+            this.view.Center = new Vector2f(Getplayer().Xpos, Getplayer().Ypos);
             
             this._renderWindow.Display();
             //Zakomentować wszystko, sprawdzić wydajność programu pod wzzględem ilości ticków aplikacji
