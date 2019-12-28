@@ -121,10 +121,14 @@
     <Compile Include="Scripts\AdminConsoleCommands.cs" />
     <Compile Include="Scripts\Animation.cs" />
     <Compile Include="Scripts\AnimationCharacter.cs" />
+    <Compile Include="Scripts\Conversation.cs" />
     <Compile Include="Scripts\FrontEndMainWindow.cs" />
     <Compile Include="LoginMenu.xaml.cs">
       <DependentUpon>LoginMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\GameManager.cs" />
+    <Compile Include="Scripts\Items\Inventory.cs" />
+    <Compile Include="Scripts\Items\Sword.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Player.cs" />
@@ -234,6 +238,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\Conversations\" />
+    <Folder Include="Scripts\Fighting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

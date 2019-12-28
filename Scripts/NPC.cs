@@ -2,7 +2,7 @@
 {
     class NPC : AnimationCharacter
     {
-        public NPC() : base("../../Sprites/Ruda_Krotkie.png", 32)
+        public NPC() : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Krotkie.png", 32)
         {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);

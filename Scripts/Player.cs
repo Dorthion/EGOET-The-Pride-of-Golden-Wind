@@ -4,7 +4,7 @@ namespace EGOET
 {
     class Player : AnimationCharacter
     {
-        public Player() : base("../../Sprites/Ruda_Dlugie.png", 32) {
+        public Player() : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);

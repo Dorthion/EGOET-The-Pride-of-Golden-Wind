@@ -7,33 +7,22 @@
             xmlns:local="clr-namespace:EGOET" 
             UseNoneWindowStyle="true"
             IgnoreTaskbarOnMaximize="True"
-    
-            Top="0" 
-            Left="0"
-            WindowState="Maximized"
-    
             Icon="pack://siteoforigin:,,,/Resources/IconMeme.ico" 
             TitleCharacterCasing="Normal"
-            Loaded="MetroWindow_Loaded" 
-    
-            NonActiveBorderBrush="Black" 
-            Background="Black" 
-            NonActiveWindowTitleBrush="Black" 
-            VerticalAlignment="Stretch"
-    
-            ScrollViewer.VerticalScrollBarVisibility="Disabled"     
+            Loaded="MetroWindow_Loaded"
+            Background="Black"
             WindowStartupLocation="Manual" 
             ResizeMode="NoResize" Height="1080" Width="1920"
             
             >
     <Window.Resources>
-        <Style TargetType="Border">
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="3"/>
-            <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="Background" Value="DimGray"/>
-            <Setter Property="Grid.Column" Value="1"/>
-            <Setter Property="Grid.Row" Value="1"/>
+        <Style TargetType="Button" x:Key="Clear">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{x:Null}"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Width" Value="32"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -95,11 +84,11 @@
             <Button Name="KowalBtn" Content="Kow" Width="30" HorizontalAlignment="Left" Margin="40,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
             <Button Name="TownLocBtn" Content="TLoc" Width="30" HorizontalAlignment="Left" Margin="75,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
             <Button Name="WorldLocBtn" Content="WLoc" Width="30" HorizontalAlignment="Left" Margin="110,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
-            <Button Name="CalendarBtn" Content="Cal" Width="30" HorizontalAlignment="Left" Margin="145,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+            <Button Name="OpenAdminConsole" Content="AC" Width="30" HorizontalAlignment="Left" Margin="145,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="OpenAdminConsole_Click"/>
         </Grid>
 
         <Button Content="X" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,12,0" VerticalAlignment="Top" Width="24" Height="24" FontSize="10" FontWeight="ExtraBlack" Click="Button_Click"/>
-        <ScrollViewer x:Name="AdminScroll" Margin="10,600,10,41" Grid.Row="1"  Grid.Column="1" >
+        <ScrollViewer x:Name="AdminScroll" Margin="10,600,10,41" Grid.Row="1"  Grid.Column="1" Visibility="Hidden">
             <TextBlock x:Name="AdminConsole" 
                        TextWrapping="Wrap" 
                        Text="Admin Console..." 
@@ -116,7 +105,11 @@
                 Margin="148,926,10,0" 
                 Grid.Row="1" 
                 FontSize="6.5" 
-                Click="RunAdminCommand" Height="26" VerticalAlignment="Top"/>
+                Click="RunAdminCommand" 
+                Height="26" 
+                VerticalAlignment="Top"
+                Visibility="Hidden"
+                />
         <TextBox x:Name="AdminTextBox" Grid.Column="1" 
                  HorizontalAlignment="Left" 
                  Height="23" Margin="10,926,0,0"
@@ -132,33 +125,54 @@
                  VerticalContentAlignment="Center" 
                  Background="Black" 
                  Foreground="White" 
-                 GotFocus="AdminTextBox_GotFocus" LostFocus="AdminTextBox_LostFocus" 
+                 GotFocus="AdminTextBox_GotFocus" 
+                 LostFocus="AdminTextBox_LostFocus"
+                 Visibility="Hidden"
                  />
-        <Border Margin="48,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Helm" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="48,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Naszyjnik" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="84,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Rekawiczki" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="12,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Pierscien" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="48,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Torso" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="84,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Tarcza" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="12,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Miecz" Height="30" Width="30"/>
-        </Border>
-        <Border Margin="48,148,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image x:Name="Buty" Height="30" Width="30"/>
-        </Border>
 
-        <Button Content="Start Game" Grid.Column="1" Margin="30,562,60,0" VerticalAlignment="Top" Click="StartGame_Click" Height="25" Grid.Row="1" RenderTransformOrigin="0.518,0.013"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Button x:Name="Helm" Margin="48,38,104,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Naszyjnik" Margin="48,73,104,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Rekawiczki" Margin="84,73,68,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Pierscien" Margin="12,73,140,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Torso" Margin="48,110,104,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Tarcza" Margin="84,110,68,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Miecz" Margin="12,110,140,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="Buty" Margin="48,145,104,0" Style="{StaticResource Clear}"/>
+
+            <Button x:Name="i1" Margin="7,241,145,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i2" Margin="43,241,109,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i3" Margin="80,241,72,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i4" Margin="116,241,36,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i5" Margin="151,241,3,0" Style="{StaticResource Clear}"/>
+
+            <Button x:Name="i6" Margin="7,277,145,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i7" Margin="43,277,109,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i8" Margin="80,277,72,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i9" Margin="116,277,36,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i10" Margin="151,277,3,0" Style="{StaticResource Clear}"/>
+
+            <Button x:Name="i11" Margin="7,312,145,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i12" Margin="43,312,109,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i13" Margin="80,312,72,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i14" Margin="116,312,36,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i15" Margin="151,312,3,0" Style="{StaticResource Clear}"/>
+
+            <Button x:Name="i16" Margin="7,348,145,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i17" Margin="43,348,109,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i18" Margin="80,348,72,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i19" Margin="116,348,36,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i20" Margin="151,348,3,0" Style="{StaticResource Clear}"/>
+
+            <Button x:Name="i21" Margin="7,384,145,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i22" Margin="43,384,109,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i23" Margin="79,384,73,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i24" Margin="116,384,36,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i25" Margin="151,384,3,0" Style="{StaticResource Clear}"/>
+        </Grid>
+        <Label x:Name="NicknameLabel" Content="" HorizontalAlignment="Left" Margin="957,0,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="TownLabel" Content="" HorizontalAlignment="Left" Margin="957,15,0,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="MoneyLabel" Content="" HorizontalAlignment="Left" Margin="1107,0,0,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="LvlLabel" Content="" HorizontalAlignment="Left" Margin="1107,15,0,0" Height="26" VerticalAlignment="Top"/>
     </Grid>
 </Controls:MetroWindow>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace EGOET.AdminConsole
@@ -17,7 +13,7 @@ namespace EGOET.AdminConsole
             {
                 while (true)
                 {
-                    Consola.Text += "\nPozycja gracza: " + Kur.Getplayer().Xpos + "/" + Kur.Getplayer().Ypos;
+                    Consola.Text += "\nPozycja gracza: " + Kur.gM.player.Xpos + "/" + Kur.gM.player.Ypos;
                     ScrollAdmin.ScrollToBottom();
                     await Task.Delay(100);
                     if(GetMoveDzialaj == true)
