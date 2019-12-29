@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EGOET.Scripts.Items
+namespace EGOET.Scripts.Items.Inventory
 {
-    class Sword
+    public class Sword : Item
     {
+
     }
 }

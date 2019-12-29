@@ -1,20 +1,21 @@
-﻿namespace EGOET.Informations
+﻿using System.Collections.Generic;
+using EGOET.Scripts.Items.Inventory;
+
+namespace EGOET.Informations
 {
     /// <summary>
-    ///     World information zawiera podstawowe informacje o danym otoczeniu
+    ///     World information zawiera podstawowe informacje
+    ///     o danym otoczeniu
     ///     Zawiera obiekty: Nazwa, Coordy XY Spawna
     ///     Identyfikatory: Trigger, Spawn, Door
     /// </summary>
 
     [System.Serializable]
-    class WorldInformation
+    public class WorldInformation
     {
         internal int NameWorld { get; set; }
         internal int SpawnPointX { get; set; }
         internal int SpawnPointY { get; set; }
-        internal int TriggerID { get; set; }
-        internal int SpawnID { get; set; }
-        internal int DoorID { get; set; }
     }
 
     /// <summary>
@@ -27,7 +28,8 @@
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public HeroesClass[] Heroes { get; set; }
+        public HeroClass Hero { get; set; }
+        public List<Item> Items { get; set; }
     }
 
     /// <summary>
@@ -37,10 +39,9 @@
     /// </summary>
 
     [System.Serializable]
-    public class HeroesClass
+    public class HeroClass
     {
         //Podstawowe informacje
-        public int Id { get; set; } = 0;
         public string Name { get; set; } = "";
         public int Poziom { get; set; } = 0;
 
@@ -62,5 +63,7 @@
         public int IdMiasta { get; set; } = 0;
         public int Money { get; set; } = 0;
         public int Crystals { get; set; } = 0;
+        public int LastPositionX { get; set; } = 0;
+        public int LastPositionY { get; set; } = 0;
     }
 }

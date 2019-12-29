@@ -18,8 +18,8 @@
     <Window.Resources>
         <Style TargetType="Button" x:Key="Clear">
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0.1"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="Width" Value="32"/>
@@ -140,35 +140,35 @@
             <Button x:Name="Miecz" Margin="12,110,140,0" Style="{StaticResource Clear}"/>
             <Button x:Name="Buty" Margin="48,145,104,0" Style="{StaticResource Clear}"/>
 
-            <Button x:Name="i1" Margin="7,241,145,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i2" Margin="43,241,109,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i3" Margin="80,241,72,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i4" Margin="116,241,36,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i5" Margin="151,241,3,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i1" Margin="7,241,145,0" Style="{StaticResource Clear}" Click="ActiveInvButton" />
+            <Button x:Name="i2" Margin="43,241,109,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i3" Margin="80,241,72,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i4" Margin="116,241,36,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i5" Margin="151,241,3,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
 
-            <Button x:Name="i6" Margin="7,277,145,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i7" Margin="43,277,109,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i8" Margin="80,277,72,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i9" Margin="116,277,36,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i10" Margin="151,277,3,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i6" Margin="7,277,145,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i7" Margin="43,277,109,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i8" Margin="80,277,72,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i9" Margin="116,277,36,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i10" Margin="151,277,3,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
 
-            <Button x:Name="i11" Margin="7,312,145,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i12" Margin="43,312,109,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i13" Margin="80,312,72,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i14" Margin="116,312,36,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i15" Margin="151,312,3,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i11" Margin="7,312,145,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i12" Margin="43,312,109,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i13" Margin="80,312,72,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i14" Margin="116,312,36,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i15" Margin="151,312,3,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
 
-            <Button x:Name="i16" Margin="7,348,145,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i17" Margin="43,348,109,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i18" Margin="80,348,72,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i19" Margin="116,348,36,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i20" Margin="151,348,3,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i16" Margin="7,348,145,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i17" Margin="43,348,109,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i18" Margin="80,348,72,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i19" Margin="116,348,36,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i20" Margin="151,348,3,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
 
-            <Button x:Name="i21" Margin="7,384,145,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i22" Margin="43,384,109,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i23" Margin="79,384,73,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i24" Margin="116,384,36,0" Style="{StaticResource Clear}"/>
-            <Button x:Name="i25" Margin="151,384,3,0" Style="{StaticResource Clear}"/>
+            <Button x:Name="i21" Margin="7,384,145,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i22" Margin="43,384,109,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i23" Margin="79,384,73,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i24" Margin="116,384,36,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
+            <Button x:Name="i25" Margin="151,384,3,0" Style="{StaticResource Clear}" Click="ActiveInvButton"/>
         </Grid>
         <Label x:Name="NicknameLabel" Content="" HorizontalAlignment="Left" Margin="957,0,0,0" VerticalAlignment="Top"/>
         <Label x:Name="TownLabel" Content="" HorizontalAlignment="Left" Margin="957,15,0,0" Height="26" VerticalAlignment="Top"/>

@@ -54,10 +54,12 @@ namespace EGOET
             ShowMinButton = false;
             Loaded -= OnLoaded;
 
-            NicknameLabel.Content = gM.PlayerControler.Heroes[gM.actualCharacter].Name.ToString();
-            TownLabel.Content = gM.PlayerControler.Heroes[gM.actualCharacter].IdMiasta.ToString();
-            MoneyLabel.Content = gM.PlayerControler.Heroes[gM.actualCharacter].Money.ToString();
-            LvlLabel.Content = gM.PlayerControler.Heroes[gM.actualCharacter].Poziom.ToString();
+            NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString();
+            TownLabel.Content = (GameManager.Towns)gM.PlayerControler.Hero.IdMiasta;
+            MoneyLabel.Content = gM.PlayerControler.Hero.Money.ToString();
+            LvlLabel.Content = gM.PlayerControler.Hero.Poziom.ToString();
+
+            gM.LoadInventory(this);
         }
 
         public MainWindow(PlayerClass _player)
@@ -159,6 +161,12 @@ namespace EGOET
             AdminScroll.Visibility = Visibility.Visible;
             AdminButton.Visibility = Visibility.Visible;
             AdminTextBox.Visibility = Visibility.Visible;
+        }
+
+        private void ActiveInvButton(object sender, RoutedEventArgs e)
+        {
+            (sender as Button).Background = Brushes.Red;
+            MessageBox.Show((sender as Button).Name);
         }
     }
 
