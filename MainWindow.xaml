@@ -17,12 +17,28 @@
             >
     <Window.Resources>
         <Style TargetType="Button" x:Key="Clear">
-            <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="{x:Null}"/>
-            <Setter Property="BorderThickness" Value="0.1"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="ToolTip" Value="{StaticResource {x:Type ToolTip}}"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="Width" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2.0"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>

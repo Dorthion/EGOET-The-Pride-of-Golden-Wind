@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using EGOET.Scripts.Items.Inventory;
-
 namespace EGOET.Informations
 {
     /// <summary>
@@ -65,5 +63,13 @@ namespace EGOET.Informations
         public int Crystals { get; set; } = 0;
         public int LastPositionX { get; set; } = 0;
         public int LastPositionY { get; set; } = 0;
+    }
+
+    public class Item
+    {
+        public string Type { get; set; }
+        public int Rare { get; set; }
+        public int IdInv { get; set; }
+        public int IdSprite { get; set; }
     }
 }

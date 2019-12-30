@@ -19,8 +19,9 @@ namespace EGOET.Scripts
         internal AdminConsoleCommands ACC;
         internal PlayerClass PlayerControler;
         internal Inventory inventory;
+        internal Button button;
 
-        public enum Towns { Grudziadz, Torun, MaruszaMnieNieRusza};
+        public enum Towns { Grudziadz, Torun, PatusowoPomorskie};
         public GameManager()
         {
             Mapa = new Map();
@@ -34,7 +35,6 @@ namespace EGOET.Scripts
 
         public void UpdateScreen(RenderWindow _renderWindow)
         {
-            //Draw Methods
             this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32), 10);
             this.kip.Draw(_renderWindow);
             this.player.Draw(_renderWindow);
@@ -48,16 +48,23 @@ namespace EGOET.Scripts
 
         public void LoadInventory(MainWindow window)
         {
-            int i = 1;
             string LoadItem;
             Button temp;
             ImageBrush brush;
+            ToolTip tooltip;
             foreach (Item item in window.gM.PlayerControler.Items)
             {
+                tooltip = new ToolTip();
                 LoadItem = "i" + item.IdInv;
                 temp = window.FindName(LoadItem) as Button;
-                brush = inventory.TileMap[i] as ImageBrush;
+                brush = inventory.TileMap[item.IdSprite] as ImageBrush;
+                tooltip.Content =
+                    "Name: Wymysl" +
+                    "\nRare:" + item.Rare +
+                    "\nType: " + item.Type +
+                    "\nIdInv: " + item.IdInv;
                 temp.Background = brush;
+                temp.ToolTip = tooltip;
             }
         }
     }

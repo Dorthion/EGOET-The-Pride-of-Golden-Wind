@@ -16,7 +16,7 @@ namespace EGOET.Scripts.Items.Inventory
             TileMap = new ImageBrush[TTX * TTY];
 
             src.BeginInit();
-            src.UriSource = new Uri(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Resources\PathAndObjects.png", UriKind.Relative);
+            src.UriSource = new Uri(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Resources\Items.png", UriKind.Relative);
             src.CacheOption = BitmapCacheOption.OnLoad;
             src.EndInit();
 
@@ -24,13 +24,5 @@ namespace EGOET.Scripts.Items.Inventory
                 for (int j = 0; j < TTY; j++)
                     TileMap[(i * TTX) + j] = new ImageBrush(new CroppedBitmap(src, new Int32Rect(j * TileSet, i * TileSet, TileSet, TileSet)));
         }
-    }
-
-    public class Item
-    {
-        public string Type { get; set; }
-        public int Rare { get; set; }
-        public int IdInv { get; set; }
-        public int IdSprite { get; set; }
     }
 }

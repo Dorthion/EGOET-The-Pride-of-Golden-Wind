@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EGOET.Scripts.Items.Inventory
 {
-    public class Sword : Item
+    public class Sword
     {
 
     }

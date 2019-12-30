@@ -83,7 +83,7 @@ namespace EGOET
 
             //Update State
             this.gM.kip.Update(deltatime);
-            if(gM.Mapa.mapInfo[(int)gM.player.Xpos/32 + 1, (int)gM.player.Ypos/32 + 1] == false)
+           if(gM.Mapa.mapInfo[(int)gM.player.Xpos/32 + 1, (int)gM.player.Ypos/32 + 1] == false)
                 this.gM.player.Update(deltatime);
             this.gM.UpdateScreen(_renderWindow);
 
@@ -165,8 +165,58 @@ namespace EGOET
 
         private void ActiveInvButton(object sender, RoutedEventArgs e)
         {
-            (sender as Button).Background = Brushes.Red;
-            MessageBox.Show((sender as Button).Name);
+            //Zamienić to potem na switcha
+            //Jeżeli nic nie jest zaznaczone
+            if(gM.button == null)
+            {
+                (sender as Button).BorderBrush = BorderBrush;
+                gM.button = (sender as Button);
+                return;
+            }
+
+            //Jeżeli chcemy odznaczyć item, w przeciwnym wypadku zamienić miejsce
+            if(gM.button == (sender as Button))
+            {
+                //(sender as Button).BorderThickness = new Thickness(0.1);
+                gM.button = null;
+                return;
+            } else
+            {
+                //(sender as Button).BorderThickness = new Thickness(0.1);
+                int IdButtonSender = Convert.ToInt32((sender as Button).Name.Remove(0,1));
+
+                Button Btn1 = this.FindName(gM.button.Name) as Button;
+                int IdButtonZamiennik = Convert.ToInt32(Btn1.Name.Remove(0, 1));
+                Btn1.BorderThickness = new Thickness(0.1);
+
+                Item itemSender = new Item()
+                {
+                    Type = gM.PlayerControler.Items[IdButtonSender - 1].Type,
+                    Rare = gM.PlayerControler.Items[IdButtonSender - 1].Rare,
+                    IdInv = gM.PlayerControler.Items[IdButtonSender - 1].IdInv,
+                    IdSprite = gM.PlayerControler.Items[IdButtonSender - 1].IdSprite
+                };
+
+                Brush tempBackground = (sender as Button).Background;
+                (sender as Button).Background = Btn1.Background;
+                Btn1.Background = tempBackground;
+
+                ToolTip tempTooltip = new ToolTip();
+                tempTooltip.Content = (sender as Button).ToolTip.ToString();
+                (sender as Button).ToolTip = Btn1.ToolTip;
+                Btn1.ToolTip = tempTooltip;
+
+                gM.PlayerControler.Items[IdButtonSender - 1] = gM.PlayerControler.Items[IdButtonZamiennik - 1];
+                gM.PlayerControler.Items[IdButtonZamiennik - 1] = itemSender;
+
+                string tempName = Btn1.Name;
+                Btn1.Name = (sender as Button).Name;
+                (sender as Button).Name = tempName;
+
+                gM.button = null;
+                return;
+            }
+            
         }
     }
 
