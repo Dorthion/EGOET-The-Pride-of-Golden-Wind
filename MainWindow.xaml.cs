@@ -83,8 +83,7 @@ namespace EGOET
 
             //Update State
             this.gM.kip.Update(deltatime);
-           if(gM.Mapa.mapInfo[(int)gM.player.Xpos/32 + 1, (int)gM.player.Ypos/32 + 1] == false)
-                this.gM.player.Update(deltatime);
+            this.gM.player.Update(deltatime);
             this.gM.UpdateScreen(_renderWindow);
 
             //Center View
@@ -201,17 +200,13 @@ namespace EGOET
                 (sender as Button).Background = Btn1.Background;
                 Btn1.Background = tempBackground;
 
-                ToolTip tempTooltip = new ToolTip();
-                tempTooltip.Content = (sender as Button).ToolTip.ToString();
+                string tempTooltip = (sender as Button).ToolTip.ToString();
+                tempTooltip = tempTooltip.Replace("System.Windows.Controls.ToolTip: ","");
                 (sender as Button).ToolTip = Btn1.ToolTip;
                 Btn1.ToolTip = tempTooltip;
 
                 gM.PlayerControler.Items[IdButtonSender - 1] = gM.PlayerControler.Items[IdButtonZamiennik - 1];
                 gM.PlayerControler.Items[IdButtonZamiennik - 1] = itemSender;
-
-                string tempName = Btn1.Name;
-                Btn1.Name = (sender as Button).Name;
-                (sender as Button).Name = tempName;
 
                 gM.button = null;
                 return;

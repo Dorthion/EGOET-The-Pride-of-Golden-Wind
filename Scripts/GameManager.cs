@@ -12,7 +12,6 @@ namespace EGOET.Scripts
 {
     class GameManager
     {
-        internal int actualCharacter = 0;
         internal Map Mapa;
         internal NPC kip;
         internal Player player;
@@ -26,9 +25,9 @@ namespace EGOET.Scripts
         {
             Mapa = new Map();
             kip = new NPC();
-            ACC = new AdminConsoleCommands();
-            player = new Player();
             inventory = new Inventory();
+            ACC = new AdminConsoleCommands();
+            player = new Player(Mapa.mapInfo);
             PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
             SpawnPointPlayer();
         }
