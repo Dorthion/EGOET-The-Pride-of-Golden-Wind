@@ -8,6 +8,7 @@ namespace EGOET.Scripts.Items.Inventory
     class Inventory
     {
         internal ImageBrush[] TileMap;
+        internal CroppedBitmap UnderButton;
 
         public Inventory()
         {
@@ -23,6 +24,7 @@ namespace EGOET.Scripts.Items.Inventory
             for (int i = 0; i < TTX; i++)
                 for (int j = 0; j < TTY; j++)
                     TileMap[(i * TTX) + j] = new ImageBrush(new CroppedBitmap(src, new Int32Rect(j * TileSet, i * TileSet, TileSet, TileSet)));
+            UnderButton = new CroppedBitmap(src, new Int32Rect(11 * TileSet, 0 , TileSet, TileSet));
         }
     }
 }

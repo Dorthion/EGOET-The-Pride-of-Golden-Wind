@@ -22,6 +22,7 @@
             <Setter Property="ToolTip" Value="{StaticResource {x:Type ToolTip}}"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="Width" Value="32"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -34,7 +35,11 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush/>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="BorderBrush" Value="Red"/>
                     <Setter Property="BorderThickness" Value="2.0"/>
                 </Trigger>
@@ -85,10 +90,10 @@
                     Content="FS" 
                     Margin="125,5,0,0" 
                     Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
-            <Button Name="AlarmBtn" 
+            <Button Name="SaveBtn" 
                     Content="Ala" 
                     Margin="155,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Click="SaveBtn_Click"/>
             <Button Name="StoreBtn" 
                     Content="Store" 
                     Margin="185,5,0,0" 
@@ -190,5 +195,11 @@
         <Label x:Name="TownLabel" Content="" HorizontalAlignment="Left" Margin="957,15,0,0" Height="26" VerticalAlignment="Top"/>
         <Label x:Name="MoneyLabel" Content="" HorizontalAlignment="Left" Margin="1107,0,0,0" Height="26" VerticalAlignment="Top"/>
         <Label x:Name="LvlLabel" Content="" HorizontalAlignment="Left" Margin="1107,15,0,0" Height="26" VerticalAlignment="Top"/>
+        <Image Name="SelectedButton" Grid.Column="1" 
+               HorizontalAlignment="Left" Height="32" 
+               Margin="43,197,0,0" Grid.Row="1" 
+               VerticalAlignment="Top" Width="32"
+               Visibility="Hidden"
+               IsHitTestVisible="False"/>
     </Grid>
 </Controls:MetroWindow>

@@ -65,6 +65,17 @@ namespace EGOET.Scripts
                 temp.Background = brush;
                 temp.ToolTip = tooltip;
             }
+            window.SelectedButton.Source = inventory.UnderButton;
+        }
+
+        public void SaveEq()
+        {
+            //File.WriteAllText("C:\\Users\\Dorthion\\Desktop\\Admin2.json", JsonConvert.SerializeObject(PlayerControler));
+            using (StreamWriter file = File.CreateText("C:\\Users\\Dorthion\\Desktop\\Admin3.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, PlayerControler);
+            }
         }
     }
 }

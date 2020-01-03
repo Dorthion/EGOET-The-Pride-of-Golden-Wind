@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using EGOET.Scripts;
+using System.Windows.Media.Imaging;
 
 namespace EGOET
 {
@@ -103,7 +104,14 @@ namespace EGOET
             gM.kip.CurrentState = CharacterState.MovingDown;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Czy chcesz wyjść i zapisać stan gry?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.None) != MessageBoxResult.No)
+            {
+                gM.SaveEq();
+                this.Close();
+            }
+        }
 
         private void RunAdminCommand(object sender, RoutedEventArgs e)
         {
@@ -164,27 +172,24 @@ namespace EGOET
 
         private void ActiveInvButton(object sender, RoutedEventArgs e)
         {
-            //Zamienić to potem na switcha
-            //Jeżeli nic nie jest zaznaczone
             if(gM.button == null)
             {
                 (sender as Button).BorderBrush = BorderBrush;
                 gM.button = (sender as Button);
+                SelectedButton.Visibility = Visibility.Visible;
+                SelectedButton.Margin = (sender as Button).Margin;
                 return;
             }
 
-            //Jeżeli chcemy odznaczyć item, w przeciwnym wypadku zamienić miejsce
             if(gM.button == (sender as Button))
             {
-                //(sender as Button).BorderThickness = new Thickness(0.1);
                 gM.button = null;
+                SelectedButton.Visibility = Visibility.Hidden;
                 return;
             } else
             {
-                //(sender as Button).BorderThickness = new Thickness(0.1);
-                int IdButtonSender = Convert.ToInt32((sender as Button).Name.Remove(0,1));
-
                 Button Btn1 = this.FindName(gM.button.Name) as Button;
+                int IdButtonSender = Convert.ToInt32((sender as Button).Name.Remove(0,1));
                 int IdButtonZamiennik = Convert.ToInt32(Btn1.Name.Remove(0, 1));
                 Btn1.BorderThickness = new Thickness(0.1);
 
@@ -205,13 +210,19 @@ namespace EGOET
                 (sender as Button).ToolTip = Btn1.ToolTip;
                 Btn1.ToolTip = tempTooltip;
 
+                SelectedButton.Visibility = Visibility.Hidden;
+
                 gM.PlayerControler.Items[IdButtonSender - 1] = gM.PlayerControler.Items[IdButtonZamiennik - 1];
                 gM.PlayerControler.Items[IdButtonZamiennik - 1] = itemSender;
 
                 gM.button = null;
                 return;
             }
-            
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            gM.SaveEq();
         }
     }
 

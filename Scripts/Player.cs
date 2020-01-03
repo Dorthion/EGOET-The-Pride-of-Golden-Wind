@@ -23,26 +23,22 @@ namespace EGOET
             if (Keyboard.IsKeyPressed(Keyboard.Key.W))
             {
                 this.CurrentState = CharacterState.MovingUp;
-                if (_tab[(int)Xpos/32, (int)Ypos/32] == true ||
-                    _tab[(int)(Xpos/32) + 1, (int)Ypos/32] == true) return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)Ypos / 32] == true) return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.S))
             {
                 this.CurrentState = CharacterState.MovingDown;
-                if (_tab[(int)Xpos/32, (int)(Ypos / 32) + 1] == true ||
-                    _tab[(int)(Xpos/32) + 1, (int)(Ypos/32) + 1] == true) return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)(Ypos + 32)/ 32] == true) return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
                 this.CurrentState = CharacterState.MovingLeft;
-                if (_tab[(int)Xpos/32, (int)Ypos/32] == true ||
-                    _tab[(int)Xpos/32, (int)(Ypos / 32) + 1] == true) return;
+                if (_tab[(int)Xpos / 32, (int)(Ypos + 16)/ 32] == true) return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
                 this.CurrentState = CharacterState.MovingRight;
-                if (_tab[(int)(Xpos/32) + 1, (int)Ypos/32] == true ||
-                    _tab[(int)(Xpos/32) + 1, (int)(Ypos/32) + 1] == true) return;
+                if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16)/ 32] == true) return;
             }
             base.Update(deltatime);
         }
