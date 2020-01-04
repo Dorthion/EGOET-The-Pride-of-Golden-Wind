@@ -17,9 +17,9 @@ namespace EGOET
         internal GameManager gM;
         internal RenderWindow _renderWindow = null;
 
-        private Clock clock;
-        private View view = new View(new Vector2f(0, 0), new Vector2f(1718, 949));
-        private RectangleShape ClearRect = new RectangleShape()
+        private readonly Clock clock;
+        private readonly View view = new View(new Vector2f(0, 0), new Vector2f(1718, 949));
+        private readonly RectangleShape ClearRect = new RectangleShape()
         {
             Position = new Vector2f(0, 0),
             Size = new Vector2f(2000,1000),
@@ -67,7 +67,7 @@ namespace EGOET
         {
             InitializeComponent();
             clock = new Clock();
-            //PlayerControler = _player;
+            gM.PlayerControler = _player;
 
            // CreateRenderWindow();
         }
@@ -83,7 +83,9 @@ namespace EGOET
             this._renderWindow.Draw(ClearRect);
 
             //Update State
+            //if(this.gM.Mapa.playerView[(int)(this.gM.kip.Xpos)/32, (int)(this.gM.kip.Xpos)/32] == true)
             this.gM.kip.Update(deltatime);
+
             this.gM.player.Update(deltatime);
             this.gM.UpdateScreen(_renderWindow);
 

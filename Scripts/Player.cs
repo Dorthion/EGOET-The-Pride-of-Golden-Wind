@@ -4,8 +4,8 @@ namespace EGOET
 {
     class Player : AnimationCharacter
     {
-        private bool[,] _tab;
-        public Player(bool[,] tab) : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Dlugie.png", 32) {
+        private int[,] _tab;
+        public Player(int[,] tab) : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);
@@ -23,24 +23,44 @@ namespace EGOET
             if (Keyboard.IsKeyPressed(Keyboard.Key.W))
             {
                 this.CurrentState = CharacterState.MovingUp;
-                if (_tab[(int)(Xpos + 16) / 32, (int)Ypos / 32] == true) return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)Ypos / 32] != 1) PlayerAction((int)(Xpos + 16) / 32, (int)Ypos / 32); else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.S))
             {
                 this.CurrentState = CharacterState.MovingDown;
-                if (_tab[(int)(Xpos + 16) / 32, (int)(Ypos + 32)/ 32] == true) return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)(Ypos + 32)/ 32] != 1) PlayerAction((int)(Xpos + 16) / 32, (int)(Ypos + 32) / 32); else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
                 this.CurrentState = CharacterState.MovingLeft;
-                if (_tab[(int)Xpos / 32, (int)(Ypos + 16)/ 32] == true) return;
+                if (_tab[(int)Xpos / 32, (int)(Ypos + 16)/ 32] != 1) PlayerAction((int)Xpos / 32, (int)(Ypos + 16) / 32); else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
                 this.CurrentState = CharacterState.MovingRight;
-                if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16)/ 32] == true) return;
+                if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32] != 1) PlayerAction((int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32); else return;
             }
             base.Update(deltatime);
+        }
+
+        private void PlayerAction(int x, int y)
+        {
+            switch (_tab[x, y])
+            {
+                case 0: //Zwykła ścieżka
+                    return;
+                case 2:
+                    //Akcja ze skrzynią
+                    break;
+                case 3:
+                    //Akcja rozmowa
+                    break;
+                case 4:
+                    //Walka
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }

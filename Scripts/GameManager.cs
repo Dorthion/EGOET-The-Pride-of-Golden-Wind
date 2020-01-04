@@ -34,9 +34,13 @@ namespace EGOET.Scripts
 
         public void UpdateScreen(RenderWindow _renderWindow)
         {
-            this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32), 10);
-            this.kip.Draw(_renderWindow);
+            //Always render:
+            this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32));
             this.player.Draw(_renderWindow);
+
+            //Dont render if player is out of view
+            if (this.Mapa.playerView[(int)(this.kip.Xpos + 32) / 32, (int)(this.kip.Ypos + 32) / 32] == true)
+                this.kip.Draw(_renderWindow);
         }
 
         private void SpawnPointPlayer()
@@ -70,7 +74,6 @@ namespace EGOET.Scripts
 
         public void SaveEq()
         {
-            //File.WriteAllText("C:\\Users\\Dorthion\\Desktop\\Admin2.json", JsonConvert.SerializeObject(PlayerControler));
             using (StreamWriter file = File.CreateText("C:\\Users\\Dorthion\\Desktop\\Admin3.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
