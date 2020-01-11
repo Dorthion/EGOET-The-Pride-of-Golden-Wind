@@ -10,12 +10,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Threading;
 
 namespace EGOET.Scripts
 {
     class GameManager
     {
         private static readonly int NumberOfNPC = 2;
+        private bool ConvUp = false;
+
         internal Map Mapa;
         internal Player player;
         internal AdminConsoleCommands ACC;
@@ -68,13 +71,26 @@ namespace EGOET.Scripts
             //Status Conversation
             if (Keyboard.IsKeyPressed(Keyboard.Key.E) && this.player.ShowActionIcon == true)
             {
-                
+                CreateConversation();
             }
+
+            if (ConvUp == true)
+            {   
+                this.conversation.Draw(_renderWindow);
+                this.conversation.Update(this.player.Xpos, this.player.Ypos);
+                if(this.conversation.DisableConv == true)
+                {
+                    this.conversation = null;
+                    ConvUp = false;
+                }
+            }
+
         }
 
         private void CreateConversation()
         {
-            conversation = new Conversation(1, 3);
+            conversation = new Conversation(1, 29);
+            ConvUp = true;
         }
 
         private void SpawnPointPlayer()

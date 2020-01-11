@@ -13,36 +13,51 @@ namespace EGOET.Scripts.Conversations
 
         private int EndDialogAt;
         private int NumberOfDialog;
+        private bool IfPressedButton = false;
         private string[] TextToDisplay;
+
+        internal bool DisableConv = false;
 
         public Conversation(int startConv, int endConv)
         {
-             Prostokat = new RectangleShape()
-             {
-                 Size = new Vector2f(1700, 200),
-                 Position = new Vector2f(0, 650),
-                 FillColor = Color.Red
-             };
-            font = new Font(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\Font.ttf");
             var textToDisplay = File.ReadAllLines(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\GuildGuy.txt");
+            font = new Font(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\Font.ttf");
+            Prostokat = new RectangleShape()
+            {
+                Size = new Vector2f(1200, 200),
+                FillColor = Color.Red,
+                Position = new Vector2f(10000,10000)
+            };
             TextToDisplay = new string[textToDisplay.Length];
             TextToDisplay = textToDisplay;
+            NumberOfDialog = startConv-1;
             EndDialogAt = endConv;
             ActualTextToDisplay = new Text()
             {
                 Font = font,
-                DisplayedString = TextToDisplay[startConv]
+                DisplayedString = TextToDisplay[NumberOfDialog]
             };
         }
 
-        public void Update()
+        public void Update(float posX, float posY)
         {
-            //if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
-            //{
-            //    if(EndDialogAt == NumberOfDialog)
-            //    NumberOfDialog++;
-            //    ActualTextToDisplay.DisplayedString = TextToDisplay[NumberOfDialog];
-            //}
+            Prostokat.Position = new Vector2f(posX - 600, posY + 200);
+            ActualTextToDisplay.Position = new Vector2f(posX - 600, posY + 200);
+            ActualTextToDisplay.DisplayedString = TextToDisplay[NumberOfDialog];
+            if (Mouse.IsButtonPressed(Mouse.Button.Left))
+            {
+                if (EndDialogAt > NumberOfDialog && !IfPressedButton)
+                {
+                    NumberOfDialog++;
+                    IfPressedButton = true;
+                    if(EndDialogAt == NumberOfDialog)
+                        DisableConv = true;
+                } 
+            }
+            else
+            {
+                IfPressedButton = false;
+            }
         }
 
         public void Draw(RenderWindow window)
