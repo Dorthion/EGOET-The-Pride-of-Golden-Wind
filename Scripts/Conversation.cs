@@ -15,7 +15,7 @@ namespace EGOET.Scripts.Conversations
         private int NumberOfDialog;
         private string[] TextToDisplay;
 
-        public void LoadConversation(RenderWindow window, int startConv, int endConv/*int idNPC*/)
+        public Conversation(int startConv, int endConv)
         {
              Prostokat = new RectangleShape()
              {
@@ -37,15 +37,15 @@ namespace EGOET.Scripts.Conversations
 
         public void Update()
         {
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
-            {
-                if(EndDialogAt == NumberOfDialog)
-                NumberOfDialog++;
-                ActualTextToDisplay.DisplayedString = TextToDisplay[NumberOfDialog];
-            }
+            //if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
+            //{
+            //    if(EndDialogAt == NumberOfDialog)
+            //    NumberOfDialog++;
+            //    ActualTextToDisplay.DisplayedString = TextToDisplay[NumberOfDialog];
+            //}
         }
 
-        public void Draw(RenderWindow window/*, Text textToDisplay*/)
+        public void Draw(RenderWindow window)
         {
             window.Draw(drawable: Prostokat);
             window.Draw(drawable: ActualTextToDisplay);

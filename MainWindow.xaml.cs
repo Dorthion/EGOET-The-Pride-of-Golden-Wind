@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using EGOET.Scripts;
-using System.Windows.Media.Imaging;
 
 namespace EGOET
 {
@@ -74,26 +73,28 @@ namespace EGOET
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //this._renderWindow.DispatchEvents();
             float deltatime = clock.Restart().AsSeconds();
             this._renderWindow.SetView(view);
 
             //Clear Screen
             this.ClearRect.Position = new Vector2f(gM.player.Xpos - 1000.0f, gM.player.Ypos - 500.0f);
             this._renderWindow.Draw(ClearRect);
-
-            //Update State
-            //if(this.gM.Mapa.playerView[(int)(this.gM.kip.Xpos)/32, (int)(this.gM.kip.Xpos)/32] == true)
-            this.gM.kip.Update(deltatime);
-
             this.gM.player.Update(deltatime);
+            this.gM.action.Update(this.gM.player.Xpos, this.gM.player.Ypos);
             this.gM.UpdateScreen(_renderWindow);
+            foreach(var t in gM.kip)
+                t.Update(deltatime);
 
             //Center View
             this.view.Center = new Vector2f(gM.player.Xpos, gM.player.Ypos);
             
             //Display
             this._renderWindow.Display();
+
+            //if (e.KeyCode == Keys.Escape)
+            //{
+            //    yourTextBox.Text = string.Empty;
+            //}
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -103,7 +104,8 @@ namespace EGOET
             this._renderWindow.DispatchEvents();
 
             this.view.Zoom(0.7f);
-            gM.kip.CurrentState = CharacterState.MovingDown;
+            foreach(var t in gM.kip)
+                t.CurrentState = CharacterState.MovingDown;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

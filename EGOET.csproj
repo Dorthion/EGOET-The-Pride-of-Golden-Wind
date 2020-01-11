@@ -118,6 +118,7 @@
     <Compile Include="OptionWindow.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Action.cs" />
     <Compile Include="Scripts\AdminConsoleCommands.cs" />
     <Compile Include="Scripts\Animation.cs" />
     <Compile Include="Scripts\AnimationCharacter.cs" />
@@ -182,6 +183,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Scripts\Conversations\Font.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -205,6 +207,7 @@
     <None Include="Resources\Tlo.png" />
     <Resource Include="Resources\Lgoo.png" />
     <Resource Include="Resources\PathAndObjects.png" />
+    <Resource Include="Scripts\Conversations\GuildGuy.txt" />
     <Content Include="SFML Library\openal32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -240,7 +243,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\Conversations\" />
     <Folder Include="Scripts\Fighting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

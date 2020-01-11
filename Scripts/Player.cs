@@ -1,10 +1,12 @@
-﻿using SFML.Window;
+﻿using System;
+using SFML.Window;
 
 namespace EGOET
 {
     class Player : AnimationCharacter
     {
         private int[,] _tab;
+        internal bool ShowActionIcon = false;
         public Player(int[,] tab) : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
@@ -40,6 +42,7 @@ namespace EGOET
                 this.CurrentState = CharacterState.MovingRight;
                 if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32] != 1) PlayerAction((int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32); else return;
             }
+
             base.Update(deltatime);
         }
 
@@ -48,9 +51,11 @@ namespace EGOET
             switch (_tab[x, y])
             {
                 case 0: //Zwykła ścieżka
+                    ShowActionIcon = false;
                     return;
                 case 2:
                     //Akcja ze skrzynią
+                    ShowActionIcon = true;
                     break;
                 case 3:
                     //Akcja rozmowa

@@ -1,13 +1,17 @@
-﻿namespace EGOET
+﻿using EGOET.Informations;
+
+namespace EGOET
 {
     class NPC : AnimationCharacter
     {
-        public NPC() : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Krotkie.png", 32)
+        internal NPCclass npc;
+        public NPC(string path, NPCclass npcclass) : base(path, 32)
         {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);
             Anim_Up = new Animation(96, 0, 4);
+            npc = npcclass;
         }
     }
 }

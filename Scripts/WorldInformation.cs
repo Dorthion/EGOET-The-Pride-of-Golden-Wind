@@ -65,11 +65,21 @@ namespace EGOET.Informations
         public int LastPositionY { get; set; } = 0;
     }
 
+    [System.Serializable]
     public class Item
     {
         public string Type { get; set; }
         public int Rare { get; set; }
         public int IdInv { get; set; }
         public int IdSprite { get; set; }
+    }
+
+    [System.Serializable]
+    public class NPCclass
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string SpritePath { get; set; }
+        public int QuestNumber { get; set; }
     }
 }
