@@ -43,7 +43,7 @@ namespace EGOET.Scripts
 
             //Nie potrzebne, wyczyść z pamięci
             inventory.ActionIcon = null;
-            inventory.UnderButton = null;
+            //inventory.UnderButton = null;
 
             PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
             SpawnPointPlayer();

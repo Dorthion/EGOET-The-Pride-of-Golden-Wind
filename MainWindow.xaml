@@ -74,9 +74,11 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+        <Cursor x:Key="OpenHandCursor">
+            C:\Users\Dorthion\Desktop\Cursor3.cur
+        </Cursor>
     </Window.Resources>
-    <Grid>
+    <Grid Cursor="{StaticResource OpenHandCursor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition/>

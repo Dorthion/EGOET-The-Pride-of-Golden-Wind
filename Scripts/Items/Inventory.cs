@@ -9,7 +9,7 @@ namespace EGOET.Scripts.Items.Inventory
     class Inventory
     {
         internal ImageBrush[] TileMap;
-        internal CroppedBitmap UnderButton;
+        internal CroppedBitmap UnderButton {get; set;}
         internal Sprite ActionIcon;
 
         public Inventory()

@@ -41,6 +41,7 @@ namespace EGOET
             };
 
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
+            
             CompositionTargetEx.Rendering += Timer_Tick;
             gM = new GameManager();
             clock = new Clock();
