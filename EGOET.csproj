@@ -204,6 +204,12 @@
     <Content Include="csfml-window-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Sprites\Ciemny.png" />
+    <Resource Include="Sprites\Cursor3.cur" />
+    <Resource Include="Sprites\Cursor3.png" />
+    <Resource Include="Sprites\Ruda_Dlugie.png" />
+    <Resource Include="Sprites\Ruda_Krotkie.png" />
+    <None Include="Resources\Profiles\NPC.json" />
     <None Include="Resources\Tlo.png" />
     <Resource Include="Resources\Lgoo.png" />
     <Resource Include="Resources\PathAndObjects.png" />

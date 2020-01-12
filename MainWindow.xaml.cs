@@ -41,6 +41,8 @@ namespace EGOET
             };
 
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
+            this._renderWindow.SetMouseCursorVisible(false);
+            DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
             
             CompositionTargetEx.Rendering += Timer_Tick;
             gM = new GameManager();
@@ -91,11 +93,6 @@ namespace EGOET
             
             //Display
             this._renderWindow.Display();
-
-            //if (e.KeyCode == Keys.Escape)
-            //{
-            //    yourTextBox.Text = string.Empty;
-            //}
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
