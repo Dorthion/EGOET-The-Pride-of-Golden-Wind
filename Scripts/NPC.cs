@@ -1,10 +1,12 @@
 ﻿using EGOET.Informations;
+using SFML.Graphics;
 
 namespace EGOET
 {
     class NPC : AnimationCharacter
     {
         internal NPCclass npc;
+
         public NPC(string path, NPCclass npcclass) : base(path, 32)
         {
             Anim_Down = new Animation(0, 0, 4);

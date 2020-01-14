@@ -21,7 +21,7 @@ namespace EGOET.Scripts.Conversations
         public Conversation(int startConv, int endConv)
         {
             var textToDisplay = File.ReadAllLines(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\GuildGuy.txt");
-            font = new Font(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\Font.ttf");
+            font = new Font(@"..\..\Resources\Fonts\Font.ttf");
             Prostokat = new RectangleShape()
             {
                 Size = new Vector2f(1200, 200),

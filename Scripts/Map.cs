@@ -7,17 +7,16 @@ namespace EGOET.Maps
     class Map
     {
         public Sprite[,] Tiles;
-        internal int TTX = 0, TTY = 0;
-        internal int[,] mapInfo;
-        internal bool[,] playerView = new bool [1000, 1000];
+        internal int[,] mapInfo { get; set; };
+        internal bool[,] playerView = new bool [100, 100];
         private readonly int TileX = 54, TileY = 31, TileSet = 32;
-        private int GlebokoscOdswiezania;
+        private readonly int GlebokoscOdswiezania;
 
         public Map()
         {
-            Texture TextureMap = new Texture(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Resources\trees-and-bushes.png");
-            TTX = Convert.ToInt32(TextureMap.Size.X/32);
-            TTY = Convert.ToInt32(TextureMap.Size.Y/32);
+            Texture TextureMap = new Texture(@"..\..\Resources\trees-and-bushes.png");
+            int TTX = Convert.ToInt32(TextureMap.Size.X/32);
+            int TTY = Convert.ToInt32(TextureMap.Size.Y/32);
             Sprite[] TileMap = new Sprite[TTX * TTY];
             GlebokoscOdswiezania = Properties.Settings.Default.RenderDistance;
 
@@ -31,8 +30,8 @@ namespace EGOET.Maps
             }
 
             Tiles = new Sprite[TileX, TileY];
-            StreamReader reader = new StreamReader(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\GameProbs.csv");
-            int[,] mapinfo = new int[1000, 1000];
+            StreamReader reader = new StreamReader(@"..\..\GameProbs.csv");
+            int[,] mapinfo = new int[100, 100];
             
             for (int y = 0; y < TileY; y++)
             {
@@ -56,7 +55,7 @@ namespace EGOET.Maps
 
         public void Draw(RenderWindow window, int TileX, int TileY)
         {
-            ClearPlayerView();
+            Array.Clear(playerView, 0, playerView.Length);
             for (int i = TileX - GlebokoscOdswiezania; i < TileX + GlebokoscOdswiezania; i++)
             {
                 for (int j = TileY - GlebokoscOdswiezania; j < TileY + GlebokoscOdswiezania; j++)
@@ -66,17 +65,6 @@ namespace EGOET.Maps
                         window.Draw(drawable: Tiles[i, j]);
                         playerView[i, j] = true;
                     }
-                }
-            }
-        }
-
-        public void ClearPlayerView()
-        {
-            for (int i = TileX; i < TileX; i++)
-            {
-                for (int j = TileY; j < TileY; j++)
-                {
-                    playerView[i, j] = false;
                 }
             }
         }

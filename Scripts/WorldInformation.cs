@@ -48,8 +48,6 @@ namespace EGOET.Informations
         public int ExpToNextLvl { get; set; } = 0;
         public int Hp { get; set; } = 0;
         public int HpMax { get; set; } = 0;
-        public int Mp { get; set; } = 0;
-        public int MpMax { get; set; } = 0;
 
         //Statystyki Umiejętności
         public int Sila { get; set; } = 0;
@@ -60,7 +58,6 @@ namespace EGOET.Informations
         public int PunktyUmiejetnosci { get; set; } = 0;
         public int IdMiasta { get; set; } = 0;
         public int Money { get; set; } = 0;
-        public int Crystals { get; set; } = 0;
         public int LastPositionX { get; set; } = 0;
         public int LastPositionY { get; set; } = 0;
     }
@@ -81,5 +78,6 @@ namespace EGOET.Informations
         public string Name { get; set; }
         public string SpritePath { get; set; }
         public int QuestNumber { get; set; }
+        public int CurrentMovement { get; set; }
     }
 }

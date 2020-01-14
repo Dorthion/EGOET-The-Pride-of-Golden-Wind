@@ -1,4 +1,5 @@
 ﻿using EGOET.Informations;
+using EGOET.Scripts;
 using MahApps.Metro.Controls;
 using SFML.Graphics;
 using SFML.System;
@@ -6,8 +7,8 @@ using SFML.Window;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
-using EGOET.Scripts;
 
 namespace EGOET
 {
@@ -42,10 +43,13 @@ namespace EGOET
 
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
             this._renderWindow.SetMouseCursorVisible(false);
+            
+            
             DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
             
             CompositionTargetEx.Rendering += Timer_Tick;
             gM = new GameManager();
+            UpdateStatistics();
             clock = new Clock();
         }
 
@@ -55,6 +59,7 @@ namespace EGOET
             ResizeMode = ResizeMode.NoResize;
             ShowMaxRestoreButton = false;
             ShowMinButton = false;
+            
             Loaded -= OnLoaded;
 
             NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString();
@@ -77,7 +82,10 @@ namespace EGOET
         private void Timer_Tick(object sender, EventArgs e)
         {
             float deltatime = clock.Restart().AsSeconds();
+
+            //Center View
             this._renderWindow.SetView(view);
+            ChangeCameraPosition(deltatime);
 
             //Clear Screen
             this.ClearRect.Position = new Vector2f(gM.player.Xpos - 1000.0f, gM.player.Ypos - 500.0f);
@@ -87,12 +95,15 @@ namespace EGOET
             this.gM.UpdateScreen(_renderWindow);
             foreach(var t in gM.kip)
                 t.Update(deltatime);
-
-            //Center View
-            this.view.Center = new Vector2f(gM.player.Xpos, gM.player.Ypos);
-            
             //Display
             this._renderWindow.Display();
+        }
+
+        private void ChangeCameraPosition(float dt)
+        {
+            //this.view.Center = new Vector2f(gM.player.Xpos, gM.player.Ypos);
+            Vector2f movement = new Vector2f(gM.player.Xpos - view.Center.X, gM.player.Ypos - view.Center.Y);
+            this.view.Move(movement * dt * 2);
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -103,7 +114,26 @@ namespace EGOET
 
             this.view.Zoom(0.7f);
             foreach(var t in gM.kip)
-                t.CurrentState = CharacterState.MovingDown;
+            {
+                switch (t.npc.CurrentMovement)
+                {
+                    case 0:
+                        t.CurrentState = CharacterState.None;
+                        break;
+                    case 1:
+                        t.CurrentState = CharacterState.MovingUp;
+                        break;
+                    case 2:
+                        t.CurrentState = CharacterState.MovingLeft;
+                        break;
+                    case 3:
+                        t.CurrentState = CharacterState.MovingDown;
+                        break;
+                    case 4:
+                        t.CurrentState = CharacterState.MovingRight;
+                        break;
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -148,6 +178,15 @@ namespace EGOET
                     else AdminConsole.Text += "\nSyntax Error: Brak komendy lub obiektu docelowego";
                     break;
             }
+        }
+
+        private void UpdateStatistics()
+        {
+            this.Strength.Content = (this.gM.PlayerControler.Hero.Sila + this.gM.PlayerControler.Hero.Magia).ToString();
+            this.Defense.Content = this.gM.PlayerControler.Hero.Obrona;
+            this.MaxHP.Content = this.gM.PlayerControler.Hero.HpMax;
+
+            lol.Height -= 10;
         }
 
         private void AdminTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -225,6 +264,25 @@ namespace EGOET
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             gM.SaveEq();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.AddHook(WndProc);
+        }
+
+        private const int WM_DPICHANGED = 0x02E0;
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_DPICHANGED)
+            {
+                handled = true;
+            }
+            return IntPtr.Zero;
         }
     }
 

@@ -57,6 +57,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
@@ -123,7 +126,6 @@
     <Compile Include="Scripts\Animation.cs" />
     <Compile Include="Scripts\AnimationCharacter.cs" />
     <Compile Include="Scripts\Conversation.cs" />
-    <Compile Include="Scripts\FrontEndMainWindow.cs" />
     <Compile Include="LoginMenu.xaml.cs">
       <DependentUpon>LoginMenu.xaml</DependentUpon>
     </Compile>
@@ -178,17 +180,21 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Scripts\Conversations\Font.ttf" />
+    <None Include="Resources\Towns\Town0.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Fonts\dum1.ttf" />
+    <Resource Include="Resources\Fonts\FantaisieArtistique.ttf" />
+    <Resource Include="Resources\Fonts\Font.ttf" />
     <None Include="Resources\IconMeme.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +220,7 @@
     <Resource Include="Resources\Lgoo.png" />
     <Resource Include="Resources\PathAndObjects.png" />
     <Resource Include="Scripts\Conversations\GuildGuy.txt" />
+    <Resource Include="Resources\RightStats.png" />
     <Content Include="SFML Library\openal32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -72,7 +72,6 @@ namespace EGOET
             {
                 if(currentAnimation != null)
                 {
-                    //spriteRect.Top = 64;
                     spriteRect.Top = currentAnimation.offsetTop;
                     if (spriteRect.Left == (currentAnimation.numFrames - 2) * frameSize)
                         spriteRect.Left = 0;

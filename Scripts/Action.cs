@@ -5,9 +5,7 @@ namespace EGOET.Scripts
 {
     class Action
     {
-        public float Xpos { get; set; }
-        public float Ypos { get; set; }
-        private Sprite ActionSprite;
+        private Sprite ActionSprite { get; set; }
 
         public Action(Sprite sprite)
         {

@@ -10,13 +10,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Threading;
 
 namespace EGOET.Scripts
 {
     class GameManager
     {
-        private static readonly int NumberOfNPC = 2;
+        private static readonly int NumberOfNPC = 3;
         private bool ConvUp = false;
 
         internal Map Mapa;
@@ -43,7 +42,6 @@ namespace EGOET.Scripts
 
             //Nie potrzebne, wyczyść z pamięci
             inventory.ActionIcon = null;
-            //inventory.UnderButton = null;
 
             PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
             SpawnPointPlayer();
@@ -53,17 +51,18 @@ namespace EGOET.Scripts
         {
             //Always render:
             this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32));
-            this.player.Draw(_renderWindow);
 
             //Dont render if player is out of view
             //if (this.Mapa.playerView[(int)(this.kip.Xpos + 32) / 32, (int)(this.kip.Ypos + 32) / 32] == true)
             //    this.kip.Draw(_renderWindow);
 
-            foreach(var hehe in kip)
+            foreach(var npc in kip)
             {
-                if(this.Mapa.playerView[(int)(hehe.Xpos + 32) / 32, (int)(hehe.Ypos + 32) / 32] == true)
-                    hehe.Draw(_renderWindow);
+                if(this.Mapa.playerView[(int)(npc.Xpos + 32) / 32, (int)(npc.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(npc.Xpos) / 32, (int)(npc.Ypos) / 32] == true)
+                    npc.Draw(_renderWindow);
             }
+
+            this.player.Draw(_renderWindow);
 
             if (player.ShowActionIcon == true)
                 this.action.Draw(_renderWindow);
