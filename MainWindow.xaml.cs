@@ -141,40 +141,15 @@ namespace EGOET
                 this.gM.UpdateScreen(_renderWindow);
                 foreach (var t in gM.kip)
                     t.Update(deltatime);
+
+                foreach (var m in gM.monsters)
+                    m.Update(deltatime);
             }
 
             //Display
             this._renderWindow.Display();
         }
 
-        private void TestWydajnosci(object sender, EventArgs e)
-        {
-            fpspersecond++;
-
-            if (clocklog.ElapsedTime.AsSeconds() > counter + 1)
-            {
-                iloscfps[counter] = fpspersecond;
-                fpspersecond = 0;
-                counter++;
-            }
-
-            if (clocklog.ElapsedTime.AsSeconds() > 10)
-            {
-                using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
-                    {
-                    int temp = 0;
-                    for(int i = 0; i<10; i++)
-                    {
-                        temp += iloscfps[i];
-                    }
-                    temp /= 10;
-                    file.WriteLine(DateTime.Now + ": FPS: " + temp + " fps; Render Distance: " + gM.Mapa.GlebokoscOdswiezania);
-                };
-                fpspersecond = 0;
-                counter = 0;
-                clocklog.Restart();
-            }
-        }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -207,6 +182,35 @@ namespace EGOET
         }
 
         #region PrivateMethods
+        private void TestWydajnosci(object sender, EventArgs e)
+        {
+            fpspersecond++;
+
+            if (clocklog.ElapsedTime.AsSeconds() > counter + 1)
+            {
+                iloscfps[counter] = fpspersecond;
+                fpspersecond = 0;
+                counter++;
+            }
+
+            if (clocklog.ElapsedTime.AsSeconds() > 10)
+            {
+                using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
+                    {
+                    int temp = 0;
+                    for(int i = 0; i<10; i++)
+                    {
+                        temp += iloscfps[i];
+                    }
+                    temp /= 10;
+                    file.WriteLine(DateTime.Now + ": FPS: " + temp + " fps; Render Distance: " + gM.Mapa.GlebokoscOdswiezania);
+                };
+                fpspersecond = 0;
+                counter = 0;
+                clocklog.Restart();
+            }
+        }
+
         internal void UpdateRenderScreenSettings()
         {
             dynamiccamera = Properties.Settings.Default.DynamicCamera;

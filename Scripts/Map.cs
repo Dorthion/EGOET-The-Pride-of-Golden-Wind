@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using EGOET.Scripts;
 using SFML.Graphics;
 
 namespace EGOET.Maps
@@ -50,11 +51,14 @@ namespace EGOET.Maps
                         mapinfo[x, y] = 1;
                     if(id == 27)
                         mapinfo[x, y] = 2;
-                    if (id == 30)
-                        mapinfo[x, y] = 4;
                 }
             }
             mapInfo = mapinfo;
+        }
+
+        internal void SetMonsters(Monster monster)
+        {
+            this.mapInfo[(int)monster.Xpos / 32, (int)monster.Ypos / 32] = 4;
         }
 
         public void Draw(RenderWindow window, int TileX, int TileY)

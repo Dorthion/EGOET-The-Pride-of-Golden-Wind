@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System;
 
 namespace EGOET.Scripts
 {
@@ -37,10 +36,21 @@ namespace EGOET.Scripts
 
         public GameManager()
         {
+            PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
+
             var temp = JsonConvert.DeserializeObject<List<NPCclass>>(File.ReadAllText("..\\..\\Resources\\Profiles\\NPC.json"));
             for (int i=0; i<NumberOfNPC; i++)
                 kip[i] = new NPC(temp.Find(x => x.Id == i+1).SpritePath, temp.Find(x => x.Id == i+1));
+
+            var temp2 = JsonConvert.DeserializeObject<List<Monsterclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\Monsters"+ PlayerControler.Hero.IdMiasta + ".json"));
+            for (int i = 0; i < NumberOfMonsters; i++)
+                monsters[i] = new Monster(temp2.Find(x => x.Id == i + 1).SpritePath, temp2.Find(x => x.Id == i + 1));
+
             Mapa = new Map();
+
+            foreach (var mon in monsters)
+                Mapa.SetMonsters(mon);
+
             inventory = new Inventory();
             ACC = new AdminConsoleCommands();
             player = new Player(Mapa.mapInfo);
@@ -49,7 +59,6 @@ namespace EGOET.Scripts
             //Nie potrzebne, wyczyść z pamięci
             inventory.ActionIcon = null;
 
-            PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
             SpawnPointPlayer();
         }
 
@@ -62,6 +71,11 @@ namespace EGOET.Scripts
             {
                 if(this.Mapa.playerView[(int)(npc.Xpos + 32) / 32, (int)(npc.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(npc.Xpos) / 32, (int)(npc.Ypos) / 32] == true)
                     npc.Draw(_renderWindow);
+            }
+
+            foreach (var mon in monsters)
+            {
+                mon.Draw(_renderWindow);
             }
 
             this.player.Draw(_renderWindow);
