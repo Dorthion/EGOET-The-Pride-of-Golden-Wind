@@ -6,6 +6,8 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,7 +21,13 @@ namespace EGOET
 
         private bool dynamiccamera;
         private bool gamerunning = true;
+
+        private int fpspersecond;
+        private int counter = 0;
+        private int[] iloscfps = new int[10];
+
         private readonly Clock clock;
+        private readonly Clock clocklog;
         private readonly View view = new View(new Vector2f(0, 0), new Vector2f(1718, 949));
         private readonly RectangleShape ClearRect = new RectangleShape()
         {
@@ -30,29 +38,56 @@ namespace EGOET
 
         public MainWindow()
         {
-            InitializeComponent();
-            Loaded += OnLoaded;
-
-            ContextSettings context = new ContextSettings()
+            using (StreamWriter file = File.AppendText(@"Logs\LogStartUp.txt"))
             {
-                AttributeFlags = ContextSettings.Attribute.Default,
-                MajorVersion = 4,
-                MinorVersion = 6,
-                DepthBits = 0,
-                StencilBits = 0,
-                AntialiasingLevel = 0
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                file.WriteLine(DateTime.Now + ": [Loading Game]");
+                InitializeComponent();
+                file.WriteLine(DateTime.Now + ": Loading Main Window... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                Loaded += OnLoaded;
+
+                ContextSettings context = new ContextSettings()
+                {
+                    AttributeFlags = ContextSettings.Attribute.Default,
+                    MajorVersion = 4,
+                    MinorVersion = 6,
+                    DepthBits = 0,
+                    StencilBits = 0,
+                    AntialiasingLevel = 0
+                };
+
+                file.WriteLine(DateTime.Now + ": Loading OnLoaded... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
+                this._renderWindow.SetMouseCursorVisible(false);
+
+                file.WriteLine(DateTime.Now + ": Loading SFML Render Window... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
+
+                file.WriteLine(DateTime.Now + ": Set Custom Cursor... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                CompositionTargetEx.Rendering += Timer_Tick;
+                CompositionTargetEx.Rendering += TestWydajnosci;
+
+                file.WriteLine(DateTime.Now + ": Set Rendering Components... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                gM = new GameManager();
+                UpdateStatistics();
+                clock = new Clock();
+                clocklog = new Clock();
+                
+                file.WriteLine(DateTime.Now + ": Loading Other Components... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                file.WriteLine(DateTime.Now + ": [Done Loading]\n");
+                stopWatch.Stop();
             };
 
-            this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
-            this._renderWindow.SetMouseCursorVisible(false);
-            
-            DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
-            
-            CompositionTargetEx.Rendering += Timer_Tick;
-
-            gM = new GameManager();
-            UpdateStatistics();
-            clock = new Clock();
+            using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
+            {
+                file.WriteLine(DateTime.Now + "[Game Started]");
+            };
         }
         public MainWindow(PlayerClass _player)
         {
@@ -85,7 +120,7 @@ namespace EGOET
         private void Timer_Tick(object sender, EventArgs e)
         {
             float deltatime = clock.Restart().AsSeconds();
-
+            
             //Center View
             if (!gM.IsFighting)
             {
@@ -110,6 +145,35 @@ namespace EGOET
 
             //Display
             this._renderWindow.Display();
+        }
+
+        private void TestWydajnosci(object sender, EventArgs e)
+        {
+            fpspersecond++;
+
+            if (clocklog.ElapsedTime.AsSeconds() > counter + 1)
+            {
+                iloscfps[counter] = fpspersecond;
+                fpspersecond = 0;
+                counter++;
+            }
+
+            if (clocklog.ElapsedTime.AsSeconds() > 10)
+            {
+                using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
+                    {
+                    int temp = 0;
+                    for(int i = 0; i<10; i++)
+                    {
+                        temp += iloscfps[i];
+                    }
+                    temp /= 10;
+                    file.WriteLine(DateTime.Now + ": FPS: " + temp + " fps; Render Distance: " + gM.Mapa.GlebokoscOdswiezania);
+                };
+                fpspersecond = 0;
+                counter = 0;
+                clocklog.Restart();
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -176,6 +240,10 @@ namespace EGOET
             if (MessageBox.Show("Czy chcesz wyjść i zapisać stan gry?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.None) != MessageBoxResult.No)
             {
                 gM.SaveEq();
+                using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
+                {
+                    file.WriteLine(DateTime.Now + "[Game Closed]\n");
+                };
                 this.Close();
             }
         }
