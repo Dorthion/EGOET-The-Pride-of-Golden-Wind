@@ -52,10 +52,6 @@ namespace EGOET.Scripts
             //Always render:
             this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32));
 
-            //Dont render if player is out of view
-            //if (this.Mapa.playerView[(int)(this.kip.Xpos + 32) / 32, (int)(this.kip.Ypos + 32) / 32] == true)
-            //    this.kip.Draw(_renderWindow);
-
             foreach(var npc in kip)
             {
                 if(this.Mapa.playerView[(int)(npc.Xpos + 32) / 32, (int)(npc.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(npc.Xpos) / 32, (int)(npc.Ypos) / 32] == true)
@@ -83,7 +79,6 @@ namespace EGOET.Scripts
                     ConvUp = false;
                 }
             }
-
         }
 
         private void CreateConversation()

@@ -1,9 +1,8 @@
 ﻿using EGOET.Informations;
-using SFML.Graphics;
 
-namespace EGOET
+namespace EGOET.Scripts
 {
-    class NPC : AnimationCharacter
+    class NPC : AnimatedCharacterWithAI
     {
         internal NPCclass npc;
 

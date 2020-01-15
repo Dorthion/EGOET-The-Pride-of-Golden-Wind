@@ -1,4 +1,5 @@
 ﻿using EGOET.Informations;
+using EGOET.Options;
 using EGOET.Scripts;
 using MahApps.Metro.Controls;
 using SFML.Graphics;
@@ -7,7 +8,6 @@ using SFML.Window;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace EGOET
@@ -17,6 +17,8 @@ namespace EGOET
         internal GameManager gM;
         internal RenderWindow _renderWindow = null;
 
+        private bool dynamiccamera;
+        private bool gamerunning = true;
         private readonly Clock clock;
         private readonly View view = new View(new Vector2f(0, 0), new Vector2f(1718, 949));
         private readonly RectangleShape ClearRect = new RectangleShape()
@@ -44,13 +46,21 @@ namespace EGOET
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
             this._renderWindow.SetMouseCursorVisible(false);
             
-            
             DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
             
             CompositionTargetEx.Rendering += Timer_Tick;
+
             gM = new GameManager();
             UpdateStatistics();
             clock = new Clock();
+        }
+        public MainWindow(PlayerClass _player)
+        {
+            InitializeComponent();
+            clock = new Clock();
+            gM.PlayerControler = _player;
+
+           // CreateRenderWindow();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -68,15 +78,7 @@ namespace EGOET
             LvlLabel.Content = gM.PlayerControler.Hero.Poziom.ToString();
 
             gM.LoadInventory(this);
-        }
-
-        public MainWindow(PlayerClass _player)
-        {
-            InitializeComponent();
-            clock = new Clock();
-            gM.PlayerControler = _player;
-
-           // CreateRenderWindow();
+            UpdateRenderScreenSettings();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -85,25 +87,25 @@ namespace EGOET
 
             //Center View
             this._renderWindow.SetView(view);
-            ChangeCameraPosition(deltatime);
+            if (dynamiccamera)
+                DynamicCamera(deltatime);
+            else StaticCamera();
 
             //Clear Screen
             this.ClearRect.Position = new Vector2f(gM.player.Xpos - 1000.0f, gM.player.Ypos - 500.0f);
             this._renderWindow.Draw(ClearRect);
-            this.gM.player.Update(deltatime);
-            this.gM.action.Update(this.gM.player.Xpos, this.gM.player.Ypos);
-            this.gM.UpdateScreen(_renderWindow);
-            foreach(var t in gM.kip)
-                t.Update(deltatime);
+
+            if (gamerunning)
+            {
+                this.gM.player.Update(deltatime);
+                this.gM.action.Update(this.gM.player.Xpos, this.gM.player.Ypos);
+                this.gM.UpdateScreen(_renderWindow);
+                foreach (var t in gM.kip)
+                    t.Update(deltatime);
+            }
+
             //Display
             this._renderWindow.Display();
-        }
-
-        private void ChangeCameraPosition(float dt)
-        {
-            //this.view.Center = new Vector2f(gM.player.Xpos, gM.player.Ypos);
-            Vector2f movement = new Vector2f(gM.player.Xpos - view.Center.X, gM.player.Ypos - view.Center.Y);
-            this.view.Move(movement * dt * 2);
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -136,6 +138,35 @@ namespace EGOET
             }
         }
 
+        #region PrivateMethods
+        internal void UpdateRenderScreenSettings()
+        {
+            dynamiccamera = Properties.Settings.Default.DynamicCamera;
+            gM.Mapa.GlebokoscOdswiezania = Properties.Settings.Default.RenderDistance;
+            gamerunning = true;
+        }
+        private void DynamicCamera(float dt)
+        {
+            Vector2f movement = new Vector2f(gM.player.Xpos - view.Center.X, gM.player.Ypos - view.Center.Y);
+            this.view.Move(movement * dt * 2);
+        }
+
+        private void StaticCamera()
+        {
+            this.view.Center = new Vector2f(gM.player.Xpos, gM.player.Ypos);
+        }
+
+        private void UpdateStatistics()
+        {
+            this.Strength.Content = (this.gM.PlayerControler.Hero.Sila + this.gM.PlayerControler.Hero.Magia).ToString();
+            this.Defense.Content = this.gM.PlayerControler.Hero.Obrona;
+            this.MaxHP.Content = this.gM.PlayerControler.Hero.HpMax;
+
+            lol.Height -= 10;
+        }
+        #endregion
+
+        #region Buttons
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Czy chcesz wyjść i zapisać stan gry?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.None) != MessageBoxResult.No)
@@ -178,15 +209,6 @@ namespace EGOET
                     else AdminConsole.Text += "\nSyntax Error: Brak komendy lub obiektu docelowego";
                     break;
             }
-        }
-
-        private void UpdateStatistics()
-        {
-            this.Strength.Content = (this.gM.PlayerControler.Hero.Sila + this.gM.PlayerControler.Hero.Magia).ToString();
-            this.Defense.Content = this.gM.PlayerControler.Hero.Obrona;
-            this.MaxHP.Content = this.gM.PlayerControler.Hero.HpMax;
-
-            lol.Height -= 10;
         }
 
         private void AdminTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -266,24 +288,13 @@ namespace EGOET
             gM.SaveEq();
         }
 
-        protected override void OnSourceInitialized(EventArgs e)
+        private void OpenOptions_Click(object sender, RoutedEventArgs e)
         {
-            base.OnSourceInitialized(e);
-
-            var source = PresentationSource.FromVisual(this) as HwndSource;
-            source?.AddHook(WndProc);
+            gamerunning = false;
+            OptionWindow option = new OptionWindow(this);
+            option.Show();
         }
-
-        private const int WM_DPICHANGED = 0x02E0;
-
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_DPICHANGED)
-            {
-                handled = true;
-            }
-            return IntPtr.Zero;
-        }
+        #endregion
     }
 
     public static class CompositionTargetEx

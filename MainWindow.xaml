@@ -12,9 +12,11 @@
             Loaded="MetroWindow_Loaded"
             Background="Black"
             WindowStartupLocation="Manual" 
-            ResizeMode="NoResize" Height="1080" Width="1920" MaxWidth="1920" MaxHeight="1080" HorizontalAlignment="Center" VerticalAlignment="Center"
+            ResizeMode="NoResize" Height="1080" Width="1920" 
+            MaxWidth="1920" MaxHeight="1080" HorizontalAlignment="Center" VerticalAlignment="Center"
             
             >
+    <!-- Window Resources-->
     <Window.Resources>
         <Style TargetType="Button" x:Key="Clear">
             <Setter Property="Foreground" Value="{x:Null}"/>
@@ -45,37 +47,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Button" x:Key="Boczne">
-            <Setter Property="Foreground" Value="{x:Null}"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="ToolTip" Value="{StaticResource {x:Type ToolTip}}"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <ImageBrush/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="BorderBrush" Value="Red"/>
-                    <Setter Property="BorderThickness" Value="2.0"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Cursor x:Key="OpenHandCursor">..\..\Sprites\Cursor3.cur</Cursor>
     </Window.Resources>
+    
+    <!-- Main Grid of Game-->
     <Grid Cursor="{StaticResource OpenHandCursor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -86,10 +61,8 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="184"/>
         </Grid.ColumnDefinitions>
-        <Canvas Grid.Column="1" Grid.Row="1">
-            <Image Height="100" Canvas.Left="91" Canvas.Top="83" Width="100" />
-        </Canvas>
 
+        <!-- SFML WinHost -->
         <WindowsFormsHost Grid.Column="0"  Margin="3,3,9,3" Grid.ColumnSpan="1" Grid.Row="1">
             <EGOET:SupportSFMLWindow x:Name="DrawSurface"/>
         </WindowsFormsHost>
@@ -98,10 +71,12 @@
 
         <Grid Grid.Row="0" Grid.Column="0"  Margin="0,0,1,5">
             <Button Name="ExitBtn" 
-                    Content="Exit" 
+                    
                     Margin="5,5,0,0" 
                     Controls:ControlsHelper.ContentCharacterCasing="Normal" 
-                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Click="OpenOptions_Click">
+
+            </Button>
             <Button Name="ControlsBtn" 
                     Content="Cont"
                     HorizontalAlignment="Left" 
@@ -123,28 +98,31 @@
             <Button Name="SaveBtn" 
                     Content="Ala" 
                     Margin="155,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Click="SaveBtn_Click"/>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
         </Grid>
 
-
-
-        <!--<Grid Grid.Row="2" Grid.Column="0"  Margin="0,3,147,-1">
-            <Button Name="ChatBtn" Content="Chat" Width="30" HorizontalAlignment="Left" Margin="5,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
-            <Button Name="KowalBtn" Content="Kow" Width="30" HorizontalAlignment="Left" Margin="40,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
-            <Button Name="TownLocBtn" Content="TLoc" Width="30" HorizontalAlignment="Left" Margin="75,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
-            <Button Name="WorldLocBtn" Content="WLoc" Width="30" HorizontalAlignment="Left" Margin="110,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
-            <Button Name="OpenAdminConsole" Content="AC" Width="30" HorizontalAlignment="Left" Margin="145,13,0,0" Height="30" VerticalAlignment="Top" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="OpenAdminConsole_Click"/>
-        </Grid>-->
-
+        <!-- Buttons: Up-Right Corner-->
         <Grid Grid.Column="1">
-            <Button Content="X" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,12,0" VerticalAlignment="Top" Width="24" Height="24" FontSize="10" FontWeight="ExtraBlack" Click="Button_Click"/>
-            <Button Name="StoreBtn" 
-                    Content="Store" 
-                    Margin="0,10,41,0"
-                    HorizontalAlignment="Right"
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" 
-                    Height="26" VerticalAlignment="Top" Width="26"/>
+            <Button Style="{StaticResource Clear}" Click="Button_Click" 
+                    Margin="143,6,9,0" ToolTip="Exit Button">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ExitIcon.png"/>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource Clear}" Click="SaveBtn_Click"
+                    Margin="106,6,46,0" ToolTip="Save Button">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SaveIcon.png"/>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource Clear}" 
+                    Margin="69,6,83,0" ToolTip="Load Button">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/LoadIcon.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
+        
         <Image HorizontalAlignment="Left" Width="164" Margin="10,458,0,295" Source="Resources/RightStats.png" Grid.Row="1" Grid.Column="1" Stretch="Fill" Height="202"/>
 
         <ScrollViewer x:Name="AdminScroll" Margin="10,600,10,41" Grid.Row="1"  Grid.Column="1" Visibility="Hidden">
@@ -239,6 +217,8 @@
                VerticalAlignment="Top" Width="32"
                Visibility="Hidden"
                IsHitTestVisible="False"/>
+        
+        <!-- Stats -->
         <Label Name="Strength"  Content="0" Grid.Column="1" HorizontalAlignment="Center" 
                Margin="90,515,29,405" Grid.Row="1" VerticalAlignment="Center"
                HorizontalContentAlignment="Center"
@@ -251,8 +231,12 @@
                Margin="91,616,28,304" Grid.Row="1" VerticalAlignment="Center" 
                HorizontalContentAlignment="Center"
                Height="35" Width="65" Foreground="White" FontSize="20" />
+        
+        <!-- Version Label -->
         <Label Content="ver. 14\01\2019" Grid.Column="1" Margin="76,954,-1,17" Grid.Row="1"
                FontSize="14" BorderBrush="Black" Grid.RowSpan="2"/>
+        
+        <!-- Test -->
         <Rectangle Name="lol" Grid.Column="1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="145" Margin="17,742,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="23"/>
     </Grid>
 </Controls:MetroWindow>

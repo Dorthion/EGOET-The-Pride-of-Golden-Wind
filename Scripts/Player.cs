@@ -1,5 +1,4 @@
-﻿using System;
-using SFML.Window;
+﻿using SFML.Window;
 
 namespace EGOET
 {
@@ -7,7 +6,7 @@ namespace EGOET
     {
         private int[,] _tab;
         internal bool ShowActionIcon = false;
-        public Player(int[,] tab) : base(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Sprites\Ruda_Dlugie.png", 32) {
+        public Player(int[,] tab) : base(@"..\..\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);

@@ -123,6 +123,7 @@
     </Compile>
     <Compile Include="Scripts\Action.cs" />
     <Compile Include="Scripts\AdminConsoleCommands.cs" />
+    <Compile Include="Scripts\AnimatedCharacterWithAI.cs" />
     <Compile Include="Scripts\Animation.cs" />
     <Compile Include="Scripts\AnimationCharacter.cs" />
     <Compile Include="Scripts\Conversation.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Player.cs" />
     <Compile Include="Scripts\Statistic.cs" />
+    <Compile Include="Scripts\Waypoint.cs" />
     <Compile Include="SupportSFMLWindow.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -221,6 +223,10 @@
     <Resource Include="Resources\PathAndObjects.png" />
     <Resource Include="Scripts\Conversations\GuildGuy.txt" />
     <Resource Include="Resources\RightStats.png" />
+    <None Include="Resources\ExitIcon.png" />
+    <None Include="Resources\SaveIcon.png" />
+    <None Include="Resources\LoadIcon.png" />
+    <None Include="Resources\SpawnIcon.png" />
     <Content Include="SFML Library\openal32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

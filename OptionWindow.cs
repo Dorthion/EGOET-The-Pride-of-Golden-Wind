@@ -1,54 +1,52 @@
 ﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EGOET.Options
 {
-    /// <summary>
-    /// Interaction logic for OptionWindow.xaml
-    /// </summary>
     public partial class OptionWindow : MetroWindow
     {
         private bool CzyZmienionoOpcje = false;
-        private int RenderDistanceOldValu;
-        public OptionWindow()
+        private MainWindow mw;
+
+        public OptionWindow(MainWindow mainWindow)
         {
             InitializeComponent();
+            mw = mainWindow;
         }
 
         private void OptDialog_Loaded(object sender, RoutedEventArgs e)
         {
             SliderRenderDistance.Value = Properties.Settings.Default.RenderDistance;
-            RenderDistanceOldValu = Properties.Settings.Default.RenderDistance;
+
+            if (Properties.Settings.Default.DynamicCamera)
+                DynamicCamera.IsChecked = true;
+            else StaticCamera.IsChecked = true;
+
+        }
+
+        private void SliderRenderDistance_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            CzyZmienionoOpcje = true;
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             if(CzyZmienionoOpcje == true)
             {
-                if (MessageBox.Show("Zapisać aktualne ustawienia?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (MessageBox.Show("Zapisać aktualne ustawienia?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.No)
                 {
-                    Properties.Settings.Default["RenderDistance"] = SliderRenderDistance.Value;
-                    
-                }
-                else
-                {
-                    //do yes stuff
-                }
-               
+                    Properties.Settings.Default["RenderDistance"] = (int)SliderRenderDistance.Value;
 
+                    if (DynamicCamera.IsChecked == true)
+                        Properties.Settings.Default.DynamicCamera = true;
+                    else   Properties.Settings.Default["DynamicCamera"] = false;
+
+                    Properties.Settings.Default.Save();
+
+                    mw.UpdateRenderScreenSettings();
+                }
             }
+            this.Close();
         }
     }
 }

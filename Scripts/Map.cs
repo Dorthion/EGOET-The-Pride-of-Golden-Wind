@@ -7,10 +7,12 @@ namespace EGOET.Maps
     class Map
     {
         public Sprite[,] Tiles;
-        internal int[,] mapInfo { get; set; };
+
+        internal int[,] mapInfo;
+        internal int GlebokoscOdswiezania;
         internal bool[,] playerView = new bool [100, 100];
+
         private readonly int TileX = 54, TileY = 31, TileSet = 32;
-        private readonly int GlebokoscOdswiezania;
 
         public Map()
         {
