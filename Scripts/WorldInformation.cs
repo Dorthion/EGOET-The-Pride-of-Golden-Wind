@@ -80,4 +80,15 @@ namespace EGOET.Informations
         public int QuestNumber { get; set; }
         public int CurrentMovement { get; set; }
     }
+
+    [System.Serializable]
+    public class Monsterclass
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public int Sila { get; set; }
+        public int Obrona { get; set; }
+        public int Hp { get; set; }
+    }
 }

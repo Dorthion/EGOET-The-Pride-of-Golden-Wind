@@ -5,7 +5,11 @@ namespace EGOET
     class Player : AnimationCharacter
     {
         private int[,] _tab;
-        internal bool ShowActionIcon = false;
+
+        internal bool IsActionNear = false;
+        internal bool IsActionWithChest = false;
+        internal bool IsFighting = false;
+
         public Player(int[,] tab) : base(@"..\..\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
@@ -50,18 +54,34 @@ namespace EGOET
             switch (_tab[x, y])
             {
                 case 0: //Zwykła ścieżka
-                    ShowActionIcon = false;
+
+                    IsActionWithChest = false;
+                    IsActionNear = false;
+
                     return;
+
                 case 2:
                     //Akcja ze skrzynią
-                    ShowActionIcon = true;
+
+                    IsActionWithChest = true;
+                    IsActionNear = true;
+
                     break;
+
                 case 3:
+
                     //Akcja rozmowa
+
                     break;
+
                 case 4:
                     //Walka
+
+                    IsActionWithChest = true;
+                    IsActionNear = true;
+
                     break;
+
                 default:
                     return;
             }

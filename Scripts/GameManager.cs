@@ -16,7 +16,9 @@ namespace EGOET.Scripts
     class GameManager
     {
         private static readonly int NumberOfNPC = 3;
-        private bool ConvUp = false;
+        private static readonly int NumberOfMonsters = 2;
+        private bool IsConvUp = false;
+        private bool IsFighting = false;
 
         internal Map Mapa;
         internal Player player;
@@ -26,7 +28,9 @@ namespace EGOET.Scripts
         internal Action action;
         internal Button button;
         internal Conversation conversation;
+        internal Fight fight;
         internal NPC[] kip = new NPC[NumberOfNPC];
+        internal Monster[] monsters = new Monster[NumberOfMonsters];
 
         public enum Towns { Grudziadz, Torun, PatusowoPomorskie};
         public GameManager()
@@ -60,23 +64,38 @@ namespace EGOET.Scripts
 
             this.player.Draw(_renderWindow);
 
-            if (player.ShowActionIcon == true)
+            if (player.IsActionNear == true)
                 this.action.Draw(_renderWindow);
 
             //Status Conversation
-            if (Keyboard.IsKeyPressed(Keyboard.Key.E) && this.player.ShowActionIcon == true)
+            if (Keyboard.IsKeyPressed(Keyboard.Key.E))
             {
-                CreateConversation();
+                if (this.player.IsActionWithChest == true)
+                    CreateConversation();
+
+                if (this.player.IsFighting == true)
+                    CreateBattleground();
             }
 
-            if (ConvUp == true)
+            if (IsConvUp == true)
             {   
                 this.conversation.Draw(_renderWindow);
                 this.conversation.Update(this.player.Xpos, this.player.Ypos);
                 if(this.conversation.DisableConv == true)
                 {
                     this.conversation = null;
-                    ConvUp = false;
+                    IsConvUp = false;
+                }
+            }
+
+            if (IsFighting == true)
+            {
+                this.fight.Draw(_renderWindow);
+                this.fight.Update(this.player.Xpos, this.player.Ypos);
+                if (this.fight.DisableFight == true)
+                {
+                    this.conversation = null;
+                    IsFighting = false;
                 }
             }
         }
@@ -84,7 +103,13 @@ namespace EGOET.Scripts
         private void CreateConversation()
         {
             conversation = new Conversation(1, 29);
-            ConvUp = true;
+            IsConvUp = true;
+        }
+
+        private void CreateBattleground()
+        {
+            fight = new Fight();
+            IsFighting = true;
         }
 
         private void SpawnPointPlayer()
