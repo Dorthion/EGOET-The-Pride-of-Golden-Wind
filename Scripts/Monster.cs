@@ -2,7 +2,7 @@
 
 namespace EGOET.Scripts
 {
-    class Monster : AnimatedCharacterWithAI
+    class Monster : AnimationCharacter
     {
         internal Monsterclass monsterclass;
         public Monster(string path, Monsterclass _monsterclass) : base(path, 32)

@@ -72,13 +72,14 @@ namespace EGOET
             
             Loaded -= OnLoaded;
 
+            gM.LoadInventory(this);
+            gM.LoadTown(this);
+            UpdateRenderScreenSettings();
+
             NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString();
-            TownLabel.Content = (GameManager.Towns)gM.PlayerControler.Hero.IdMiasta;
+            
             MoneyLabel.Content = gM.PlayerControler.Hero.Money.ToString();
             LvlLabel.Content = gM.PlayerControler.Hero.Poziom.ToString();
-
-            gM.LoadInventory(this);
-            UpdateRenderScreenSettings();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -86,10 +87,13 @@ namespace EGOET
             float deltatime = clock.Restart().AsSeconds();
 
             //Center View
-            this._renderWindow.SetView(view);
-            if (dynamiccamera)
-                DynamicCamera(deltatime);
-            else StaticCamera();
+            if (!gM.IsFighting)
+            {
+                this._renderWindow.SetView(view);
+                if (dynamiccamera)
+                    DynamicCamera(deltatime);
+                else StaticCamera();
+            }
 
             //Clear Screen
             this.ClearRect.Position = new Vector2f(gM.player.Xpos - 1000.0f, gM.player.Ypos - 500.0f);

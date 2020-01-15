@@ -77,7 +77,7 @@ namespace EGOET
                 case 4:
                     //Walka
 
-                    IsActionWithChest = true;
+                    IsFighting = true;
                     IsActionNear = true;
 
                     break;

@@ -6,14 +6,19 @@ namespace EGOET.Scripts
 {
     class Fight
     {
+        internal View view = new View(new Vector2f(430, 238), new Vector2f(1718, 949));
         private Font font;
         private RectangleShape Prostokat;
         private RectangleShape LogRectangle;
+        private Sprite battleground;
 
         internal bool DisableFight = false;
         public Fight()
         {
             font = new Font(@"..\..\Resources\Fonts\Font.ttf");
+            Texture LoadBattleground = new Texture(@"..\..\Resources\BattlegroundForest.png");
+            battleground = new Sprite(LoadBattleground);
+
             Prostokat = new RectangleShape()
             {
                 Size = new Vector2f(1200, 200),
@@ -40,6 +45,8 @@ namespace EGOET.Scripts
 
         public void Draw(RenderWindow window)
         {
+            window.SetView(view);
+            window.Draw(drawable: battleground);
             window.Draw(drawable: Prostokat);
             window.Draw(drawable: LogRectangle);
         }

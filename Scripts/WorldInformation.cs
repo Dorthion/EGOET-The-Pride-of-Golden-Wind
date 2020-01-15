@@ -11,9 +11,10 @@ namespace EGOET.Informations
     [System.Serializable]
     public class WorldInformation
     {
-        internal int NameWorld { get; set; }
-        internal int SpawnPointX { get; set; }
-        internal int SpawnPointY { get; set; }
+        public int IdWorld { get; set; }
+        public string NameWorld { get; set; }
+        public int SpawnPointX { get; set; }
+        public int SpawnPointY { get; set; }
     }
 
     /// <summary>
@@ -90,5 +91,8 @@ namespace EGOET.Informations
         public int Sila { get; set; }
         public int Obrona { get; set; }
         public int Hp { get; set; }
+        public string SpritePath { get; set; }
+        public int XPos { get; set; }
+        public int YPos { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
 
 namespace EGOET.Scripts
 {
@@ -18,7 +19,8 @@ namespace EGOET.Scripts
         private static readonly int NumberOfNPC = 3;
         private static readonly int NumberOfMonsters = 2;
         private bool IsConvUp = false;
-        private bool IsFighting = false;
+
+        internal bool IsFighting = false;
 
         internal Map Mapa;
         internal Player player;
@@ -29,10 +31,10 @@ namespace EGOET.Scripts
         internal Button button;
         internal Conversation conversation;
         internal Fight fight;
+        internal WorldInformation worldinformation;
         internal NPC[] kip = new NPC[NumberOfNPC];
         internal Monster[] monsters = new Monster[NumberOfMonsters];
 
-        public enum Towns { Grudziadz, Torun, PatusowoPomorskie};
         public GameManager()
         {
             var temp = JsonConvert.DeserializeObject<List<NPCclass>>(File.ReadAllText("..\\..\\Resources\\Profiles\\NPC.json"));
@@ -74,7 +76,10 @@ namespace EGOET.Scripts
                     CreateConversation();
 
                 if (this.player.IsFighting == true)
+                {
                     CreateBattleground();
+                    fight.view.Zoom(0.5f);
+                }
             }
 
             if (IsConvUp == true)
@@ -98,6 +103,14 @@ namespace EGOET.Scripts
                     IsFighting = false;
                 }
             }
+        }
+
+        internal void LoadTown(MainWindow mainWindow)
+        {
+            worldinformation = JsonConvert.DeserializeObject<WorldInformation>(File.ReadAllText("..\\..\\Resources\\Towns\\Town"+ PlayerControler.Hero.IdMiasta + ".json"));
+            mainWindow.TownLabel.Content = worldinformation.NameWorld;
+            player.Xpos = worldinformation.SpawnPointX * 32;
+            player.Ypos = worldinformation.SpawnPointY * 32;
         }
 
         private void CreateConversation()

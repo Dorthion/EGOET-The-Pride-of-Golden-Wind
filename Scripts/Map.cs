@@ -50,6 +50,8 @@ namespace EGOET.Maps
                         mapinfo[x, y] = 1;
                     if(id == 27)
                         mapinfo[x, y] = 2;
+                    if (id == 30)
+                        mapinfo[x, y] = 4;
                 }
             }
             mapInfo = mapinfo;
