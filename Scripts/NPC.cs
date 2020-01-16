@@ -12,6 +12,10 @@ namespace EGOET.Scripts
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);
             Anim_Up = new Animation(96, 0, 4);
+
+            Xpos = npcclass.XPos * 32;
+            Ypos = npcclass.YPos * 32;
+
             npc = npcclass;
         }
     }

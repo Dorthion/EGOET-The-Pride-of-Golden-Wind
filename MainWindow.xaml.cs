@@ -38,6 +38,8 @@ namespace EGOET
 
         public MainWindow()
         {
+            //if(!File.Exists(@"Logs"))
+            Directory.CreateDirectory("Logs");
             using (StreamWriter file = File.AppendText(@"Logs\LogStartUp.txt"))
             {
                 Stopwatch stopWatch = new Stopwatch();
@@ -136,7 +138,8 @@ namespace EGOET
 
             if (gamerunning)
             {
-                this.gM.player.Update(deltatime);
+                if(!this.gM.IsPaused)
+                    this.gM.player.Update(deltatime);
                 this.gM.action.Update(this.gM.player.Xpos, this.gM.player.Ypos);
                 this.gM.UpdateScreen(_renderWindow);
                 foreach (var t in gM.kip)

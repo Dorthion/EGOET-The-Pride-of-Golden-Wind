@@ -80,6 +80,8 @@ namespace EGOET.Informations
         public string SpritePath { get; set; }
         public int QuestNumber { get; set; }
         public int CurrentMovement { get; set; }
+        public int XPos { get; set; }
+        public int YPos { get; set; }
     }
 
     [System.Serializable]

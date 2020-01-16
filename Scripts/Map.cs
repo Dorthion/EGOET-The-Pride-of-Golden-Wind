@@ -49,17 +49,21 @@ namespace EGOET.Maps
                     };
                     if (id != 36)
                         mapinfo[x, y] = 1;
-                    if(id == 27)
-                        mapinfo[x, y] = 2;
                 }
             }
             mapInfo = mapinfo;
+        }
+
+        internal void SetNPC(NPC npc)
+        {
+            this.mapInfo[(int)npc.Xpos / 32, (int)npc.Ypos / 32] = 2;
         }
 
         internal void SetMonsters(Monster monster)
         {
             this.mapInfo[(int)monster.Xpos / 32, (int)monster.Ypos / 32] = 4;
         }
+
 
         public void Draw(RenderWindow window, int TileX, int TileY)
         {

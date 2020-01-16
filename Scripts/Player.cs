@@ -8,7 +8,11 @@ namespace EGOET
 
         internal bool IsActionNear = false;
         internal bool IsActionWithChest = false;
+        internal bool IsActionWithNPC = false;
         internal bool IsFighting = false;
+
+        internal int XPosAction { get; set; }
+        internal int YPosAction { get; set; }
 
         public Player(int[,] tab) : base(@"..\..\Sprites\Ruda_Dlugie.png", 32) {
             Anim_Down = new Animation(0, 0, 4);
@@ -24,53 +28,83 @@ namespace EGOET
         public override void Update (float deltatime)
         {
             this.CurrentState = CharacterState.None;
-
             if (Keyboard.IsKeyPressed(Keyboard.Key.W))
             {
                 this.CurrentState = CharacterState.MovingUp;
-                if (_tab[(int)(Xpos + 16) / 32, (int)Ypos / 32] != 1) PlayerAction((int)(Xpos + 16) / 32, (int)Ypos / 32); else return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)Ypos / 32] != 1)
+                {
+                    if (!PlayerAction((int)(Xpos + 16) / 32, (int)Ypos / 32, (int)Xpos, (int)Ypos))
+                        return;
+                }
+                else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.S))
             {
                 this.CurrentState = CharacterState.MovingDown;
-                if (_tab[(int)(Xpos + 16) / 32, (int)(Ypos + 32)/ 32] != 1) PlayerAction((int)(Xpos + 16) / 32, (int)(Ypos + 32) / 32); else return;
+                if (_tab[(int)(Xpos + 16) / 32, (int)(Ypos + 32)/ 32] != 1)
+                {
+                    if(!PlayerAction((int)(Xpos + 16) / 32, (int)(Ypos + 32) / 32, (int)Xpos, (int)Ypos))
+                        return;
+                }
+                else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
                 this.CurrentState = CharacterState.MovingLeft;
-                if (_tab[(int)Xpos / 32, (int)(Ypos + 16)/ 32] != 1) PlayerAction((int)Xpos / 32, (int)(Ypos + 16) / 32); else return;
+                if (_tab[(int)Xpos / 32, (int)(Ypos + 16)/ 32] != 1)
+                {
+                    if(!PlayerAction((int)Xpos / 32, (int)(Ypos + 16) / 32, (int)Xpos, (int)Ypos))
+                        return;
+                }
+                else return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
                 this.CurrentState = CharacterState.MovingRight;
-                if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32] != 1) PlayerAction((int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32); else return;
-            }
-
+                if (_tab[(int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32] != 1)
+                {
+                    if(!PlayerAction((int)(Xpos + 32) / 32, (int)(Ypos + 16) / 32, (int)Xpos, (int)Ypos))
+                        return;
+                }
+                else return;
+                }
             base.Update(deltatime);
         }
 
-        private void PlayerAction(int x, int y)
+        private bool PlayerAction(int x, int y, int XPos, int YPos)
         {
             switch (_tab[x, y])
             {
                 case 0: //Zwykła ścieżka
 
-                    IsActionWithChest = false;
+                    IsActionWithNPC = false;
                     IsActionNear = false;
+                    IsFighting = false;
 
-                    return;
+                    XPosAction = 0;
+                    YPosAction = 0;
+
+                    return true;
+
+                case 1:
+                    IsActionWithNPC = false;
+                    IsActionNear = false;
+                    IsFighting = false;
+
+                    return false;
 
                 case 2:
-                    //Akcja ze skrzynią
-
-                    IsActionWithChest = true;
+                    //Akcja rozmowa
+                    IsActionWithNPC = true;
                     IsActionNear = true;
 
-                    break;
+                    XPosAction = XPos;
+                    YPosAction = YPos;
+
+                    return false;
 
                 case 3:
-
-                    //Akcja rozmowa
+                    //Akcja ze skrzynką
 
                     break;
 
@@ -80,11 +114,15 @@ namespace EGOET
                     IsFighting = true;
                     IsActionNear = true;
 
-                    break;
+                    XPosAction = XPos;
+                    YPosAction = YPos;
+
+                    return false;
 
                 default:
-                    return;
+                    return true;
             }
+            return true;
         }
     }
 }

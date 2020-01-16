@@ -17,9 +17,10 @@ namespace EGOET.Scripts
     {
         private static readonly int NumberOfNPC = 3;
         private static readonly int NumberOfMonsters = 2;
-        private bool IsConvUp = false;
 
+        internal bool IsConvUp = false;
         internal bool IsFighting = false;
+        internal bool IsPaused = false;
 
         internal Map Mapa;
         internal Player player;
@@ -36,17 +37,20 @@ namespace EGOET.Scripts
 
         public GameManager()
         {
-            PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\Admin.json"));
+            PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("..\\..\\Resources\\Profiles\\Admin.json"));
 
-            var temp = JsonConvert.DeserializeObject<List<NPCclass>>(File.ReadAllText("..\\..\\Resources\\Profiles\\NPC.json"));
+            var temp = JsonConvert.DeserializeObject<List<NPCclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\NPC" + PlayerControler.Hero.IdMiasta + ".json"));
             for (int i=0; i<NumberOfNPC; i++)
                 kip[i] = new NPC(temp.Find(x => x.Id == i+1).SpritePath, temp.Find(x => x.Id == i+1));
 
-            var temp2 = JsonConvert.DeserializeObject<List<Monsterclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\Monsters"+ PlayerControler.Hero.IdMiasta + ".json"));
+            var temp2 = JsonConvert.DeserializeObject<List<Monsterclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\Monsters" + PlayerControler.Hero.IdMiasta + ".json"));
             for (int i = 0; i < NumberOfMonsters; i++)
                 monsters[i] = new Monster(temp2.Find(x => x.Id == i + 1).SpritePath, temp2.Find(x => x.Id == i + 1));
 
             Mapa = new Map();
+
+            foreach (var npc in kip)
+                Mapa.SetNPC(npc);
 
             foreach (var mon in monsters)
                 Mapa.SetMonsters(mon);
@@ -75,7 +79,8 @@ namespace EGOET.Scripts
 
             foreach (var mon in monsters)
             {
-                mon.Draw(_renderWindow);
+                if (this.Mapa.playerView[(int)(mon.Xpos + 32) / 32, (int)(mon.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(mon.Xpos) / 32, (int)(mon.Ypos) / 32] == true)
+                    mon.Draw(_renderWindow);
             }
 
             this.player.Draw(_renderWindow);
@@ -84,37 +89,47 @@ namespace EGOET.Scripts
                 this.action.Draw(_renderWindow);
 
             //Status Conversation
-            if (Keyboard.IsKeyPressed(Keyboard.Key.E))
+            if (Keyboard.IsKeyPressed(Keyboard.Key.E) && !IsPaused)
             {
                 if (this.player.IsActionWithChest == true)
+                {
                     CreateConversation();
+                    IsPaused = true;
+                }
 
                 if (this.player.IsFighting == true)
                 {
                     CreateBattleground();
                     fight.view.Zoom(0.5f);
+                    this.IsPaused = true;
                 }
             }
 
-            if (IsConvUp == true)
+            if (this.IsConvUp == true)
             {   
                 this.conversation.Draw(_renderWindow);
                 this.conversation.Update(this.player.Xpos, this.player.Ypos);
+
                 if(this.conversation.DisableConv == true)
                 {
                     this.conversation = null;
-                    IsConvUp = false;
+                    this.IsConvUp = false;
+                    //this.player.IsMoving = true;
+                    this.IsPaused = false;
                 }
             }
 
-            if (IsFighting == true)
+            if (this.IsFighting == true)
             {
                 this.fight.Draw(_renderWindow);
                 this.fight.Update(this.player.Xpos, this.player.Ypos);
+
                 if (this.fight.DisableFight == true)
                 {
-                    this.conversation = null;
-                    IsFighting = false;
+                    this.fight = null;
+                    this.IsFighting = false;
+                    //this.player.IsMoving = true;
+                    this.IsPaused = false;
                 }
             }
         }
@@ -130,13 +145,21 @@ namespace EGOET.Scripts
         private void CreateConversation()
         {
             conversation = new Conversation(1, 29);
-            IsConvUp = true;
+            this.IsConvUp = true;
         }
 
         private void CreateBattleground()
         {
-            fight = new Fight();
-            IsFighting = true;
+            int i = 0;
+            foreach(var mor in monsters)
+            {
+                if (mor.Xpos == player.XPosAction && mor.Ypos == player.YPosAction)
+                    return;
+                i++;
+            }
+
+            fight = new Fight(player, monsters[i-1]);
+            this.IsFighting = true;
         }
 
         private void SpawnPointPlayer()
@@ -170,7 +193,7 @@ namespace EGOET.Scripts
 
         public void SaveEq()
         {
-            using (StreamWriter file = File.CreateText("C:\\Users\\Dorthion\\Desktop\\Admin3.json"))
+            using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin3.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, PlayerControler);
