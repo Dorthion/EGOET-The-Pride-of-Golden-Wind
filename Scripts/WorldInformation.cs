@@ -11,7 +11,6 @@ namespace EGOET.Informations
     [System.Serializable]
     public class WorldInformation
     {
-        public int IdWorld { get; set; }
         public string NameWorld { get; set; }
         public int SpawnPointX { get; set; }
         public int SpawnPointY { get; set; }
@@ -32,9 +31,8 @@ namespace EGOET.Informations
     }
 
     /// <summary>
-    ///     Klasa o danum bohaterze
-    ///     Zbiór informacji o aktualnym ID, nazwie, 
-    ///     kasie, kryształach danego użytkownika
+    ///     Klasa o danym bohaterze
+    ///     Zbiór informacji o danych użytkownika
     /// </summary>
 
     [System.Serializable]
@@ -56,6 +54,7 @@ namespace EGOET.Informations
         public int Obrona { get; set; } = 0;
 
         //Dodatkowe Statystyki (Reszta)
+        public string SpritePath { get; set; }
         public int PunktyUmiejetnosci { get; set; } = 0;
         public int IdMiasta { get; set; } = 0;
         public int Money { get; set; } = 0;
@@ -63,15 +62,23 @@ namespace EGOET.Informations
         public int LastPositionY { get; set; } = 0;
     }
 
+    /// <summary>
+    /// Dane o przedmiocie
+    /// </summary>
     [System.Serializable]
     public class Item
     {
-        public string Type { get; set; }
+        public int Type { get; set; }
+        public int ItemName { get; set; }
         public int Rare { get; set; }
+        public int Cost { get; set; }
         public int IdInv { get; set; }
         public int IdSprite { get; set; }
     }
 
+    /// <summary>
+    /// Zbiór informacji o NPC
+    /// </summary>
     [System.Serializable]
     public class NPCclass
     {
@@ -84,6 +91,9 @@ namespace EGOET.Informations
         public int YPos { get; set; }
     }
 
+    /// <summary>
+    /// Dane o przeciwniku
+    /// </summary>
     [System.Serializable]
     public class Monsterclass
     {

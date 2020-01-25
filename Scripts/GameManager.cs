@@ -10,9 +10,43 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
 
 namespace EGOET.Scripts
 {
+    public enum ItemTypes
+    {
+        Brak,
+        Helm,
+        Naszyjnik,
+        Rekawiczki,
+        Pierscien,
+        Pancerz,
+        Tarcza,
+        Miecz,
+        Buty
+    }
+
+    public enum ItemSpec
+    {
+        Brak,
+        Zniszczony,
+        Utwardzany,
+        Twardy,
+        Magiczny,
+        Ukruszony,
+        Zaczarowany
+    }
+
+    public enum ItemRare
+    {
+        Brak,
+        Zwyczajny,
+        Rzadki,
+        Epicki,
+        Legendarny
+    }
+
     class GameManager
     {
         private static readonly int NumberOfNPC = 3;
@@ -57,7 +91,7 @@ namespace EGOET.Scripts
 
             inventory = new Inventory();
             ACC = new AdminConsoleCommands();
-            player = new Player(Mapa.mapInfo);
+            player = new Player(Mapa.mapInfo, PlayerControler.Hero.SpritePath);
             action = new Action(inventory.ActionIcon);
 
             //Nie potrzebne, wyczyść z pamięci
@@ -91,7 +125,7 @@ namespace EGOET.Scripts
             //Status Conversation
             if (Keyboard.IsKeyPressed(Keyboard.Key.E) && !IsPaused)
             {
-                if (this.player.IsActionWithChest == true)
+                if (this.player.IsActionWithNPC == true)
                 {
                     CreateConversation();
                     IsPaused = true;
@@ -122,7 +156,7 @@ namespace EGOET.Scripts
             if (this.IsFighting == true)
             {
                 this.fight.Draw(_renderWindow);
-                this.fight.Update(this.player.Xpos, this.player.Ypos);
+                this.fight.Update();
 
                 if (this.fight.DisableFight == true)
                 {
@@ -144,12 +178,14 @@ namespace EGOET.Scripts
 
         private void CreateConversation()
         {
+            GC.Collect();
             conversation = new Conversation(1, 29);
             this.IsConvUp = true;
         }
 
         private void CreateBattleground()
         {
+            GC.Collect();
             int i = 0;
             foreach(var mor in monsters)
             {
@@ -158,7 +194,7 @@ namespace EGOET.Scripts
                 i++;
             }
 
-            fight = new Fight(player, monsters[i-1]);
+            fight = new Fight(PlayerControler.Hero.SpritePath, monsters[i-1].monsterclass.SpritePath);
             this.IsFighting = true;
         }
 
@@ -181,10 +217,11 @@ namespace EGOET.Scripts
                 temp = window.FindName(LoadItem) as Button;
                 brush = inventory.TileMap[item.IdSprite] as ImageBrush;
                 tooltip.Content =
-                    "Name: Wymysl" +
-                    "\nRare:" + item.Rare +
-                    "\nType: " + item.Type +
-                    "\nIdInv: " + item.IdInv;
+                    "Name: " + (ItemSpec)item.Type + " " +
+                    (ItemTypes)item.ItemName +
+                    "\nRare:" + (ItemRare)item.Rare +
+                    "\nCost: " + item.Cost;
+                    //"\nIdInv: " + item.IdInv;
                 temp.Background = brush;
                 temp.ToolTip = tooltip;
             }
@@ -193,7 +230,8 @@ namespace EGOET.Scripts
 
         public void SaveEq()
         {
-            using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin3.json"))
+            //using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin3.json"))
+            using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, PlayerControler);

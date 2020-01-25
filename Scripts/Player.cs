@@ -14,7 +14,7 @@ namespace EGOET
         internal int XPosAction { get; set; }
         internal int YPosAction { get; set; }
 
-        public Player(int[,] tab) : base(@"..\..\Sprites\Ruda_Dlugie.png", 32) {
+        public Player(int[,] tab, string path) : base(path, 32) {
             Anim_Down = new Animation(0, 0, 4);
             Anim_Left = new Animation(32, 0, 4);
             Anim_Right = new Animation(64, 0, 4);

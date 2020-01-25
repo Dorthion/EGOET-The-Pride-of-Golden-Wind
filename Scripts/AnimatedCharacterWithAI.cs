@@ -7,10 +7,7 @@ namespace EGOET.Scripts
     {
         public List<Waypoint> Waypoints { get; set; }
         private int nextWaypointIndex = 1;
-        public AnimatedCharacterWithAI(string filename, int framesize) : base(filename, framesize)
-        {
-
-        }
+        public AnimatedCharacterWithAI(string filename, int framesize) : base(filename, framesize) {}
 
         public override void Update(float deltaTime)
         {

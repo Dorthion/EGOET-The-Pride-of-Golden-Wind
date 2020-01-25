@@ -9,7 +9,7 @@ namespace EGOET.Scripts.Conversations
     {
         private Font font;
         private Text ActualTextToDisplay;
-        private RectangleShape Prostokat;
+        private RectangleShape ConvRectangle;
 
         private int EndDialogAt;
         private int NumberOfDialog;
@@ -21,11 +21,12 @@ namespace EGOET.Scripts.Conversations
         public Conversation(int startConv, int endConv)
         {
             var textToDisplay = File.ReadAllLines(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\GuildGuy.txt");
+            Texture texture = new Texture(@"..\..\Resources\Fight.png");
             font = new Font(@"..\..\Resources\Fonts\Font.ttf");
-            Prostokat = new RectangleShape()
+            ConvRectangle = new RectangleShape()
             {
+                Texture = texture,
                 Size = new Vector2f(1200, 200),
-                FillColor = Color.Red,
                 Position = new Vector2f(10000,10000)
             };
             TextToDisplay = new string[textToDisplay.Length];
@@ -41,7 +42,7 @@ namespace EGOET.Scripts.Conversations
 
         public void Update(float posX, float posY)
         {
-            Prostokat.Position = new Vector2f(posX - 600, posY + 200);
+            ConvRectangle.Position = new Vector2f(posX - 600, posY + 200);
             ActualTextToDisplay.Position = new Vector2f(posX - 600, posY + 200);
             ActualTextToDisplay.DisplayedString = TextToDisplay[NumberOfDialog];
             if (Mouse.IsButtonPressed(Mouse.Button.Left))
@@ -62,7 +63,7 @@ namespace EGOET.Scripts.Conversations
 
         public void Draw(RenderWindow window)
         {
-            window.Draw(drawable: Prostokat);
+            window.Draw(drawable: ConvRectangle);
             window.Draw(drawable: ActualTextToDisplay);
         }
     }

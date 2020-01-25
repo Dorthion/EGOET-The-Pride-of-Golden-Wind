@@ -36,6 +36,7 @@ namespace EGOET
             FillColor = SFML.Graphics.Color.Black
         };
 
+        #region OnLoad
         public MainWindow()
         {
             //if(!File.Exists(@"Logs"))
@@ -113,11 +114,40 @@ namespace EGOET
             gM.LoadTown(this);
             UpdateRenderScreenSettings();
 
-            NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString();
-            
+            NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString() + " (" + gM.PlayerControler.Hero.Poziom.ToString() + "lvl)";
             MoneyLabel.Content = gM.PlayerControler.Hero.Money.ToString();
-            LvlLabel.Content = gM.PlayerControler.Hero.Poziom.ToString();
         }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this._renderWindow.SetFramerateLimit(0);
+            this._renderWindow.SetVerticalSyncEnabled(false);
+            this._renderWindow.DispatchEvents();
+
+            this.view.Zoom(0.7f);
+            foreach(var t in gM.kip)
+            {
+                switch (t.npc.CurrentMovement)
+                {
+                    case 0:
+                        t.CurrentState = CharacterState.None;
+                        break;
+                    case 1:
+                        t.CurrentState = CharacterState.MovingUp;
+                        break;
+                    case 2:
+                        t.CurrentState = CharacterState.MovingLeft;
+                        break;
+                    case 3:
+                        t.CurrentState = CharacterState.MovingDown;
+                        break;
+                    case 4:
+                        t.CurrentState = CharacterState.MovingRight;
+                        break;
+                }
+            }
+        }
+        #endregion
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -154,35 +184,6 @@ namespace EGOET
         }
 
 
-        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            this._renderWindow.SetFramerateLimit(0);
-            this._renderWindow.SetVerticalSyncEnabled(false);
-            this._renderWindow.DispatchEvents();
-
-            this.view.Zoom(0.7f);
-            foreach(var t in gM.kip)
-            {
-                switch (t.npc.CurrentMovement)
-                {
-                    case 0:
-                        t.CurrentState = CharacterState.None;
-                        break;
-                    case 1:
-                        t.CurrentState = CharacterState.MovingUp;
-                        break;
-                    case 2:
-                        t.CurrentState = CharacterState.MovingLeft;
-                        break;
-                    case 3:
-                        t.CurrentState = CharacterState.MovingDown;
-                        break;
-                    case 4:
-                        t.CurrentState = CharacterState.MovingRight;
-                        break;
-                }
-            }
-        }
 
         #region PrivateMethods
         private void TestWydajnosci(object sender, EventArgs e)
@@ -237,7 +238,8 @@ namespace EGOET
             this.Defense.Content = this.gM.PlayerControler.Hero.Obrona;
             this.MaxHP.Content = this.gM.PlayerControler.Hero.HpMax;
 
-            lol.Height -= 10;
+            this.HpCounter.Height = (this.gM.PlayerControler.Hero.Hp / this.gM.PlayerControler.Hero.HpMax) * 150;
+            this.ExpCounter.Height = (this.gM.PlayerControler.Hero.ExpNow / this.gM.PlayerControler.Hero.ExpToNextLvl) * 150;
         }
         #endregion
 
@@ -333,13 +335,17 @@ namespace EGOET
                 Button Btn1 = this.FindName(gM.button.Name) as Button;
                 int IdButtonSender = Convert.ToInt32((sender as Button).Name.Remove(0,1));
                 int IdButtonZamiennik = Convert.ToInt32(Btn1.Name.Remove(0, 1));
+                int Temp = gM.PlayerControler.Items[IdButtonSender - 1].IdInv;
                 Btn1.BorderThickness = new Thickness(0.1);
 
                 Item itemSender = new Item()
                 {
                     Type = gM.PlayerControler.Items[IdButtonSender - 1].Type,
+                    ItemName = gM.PlayerControler.Items[IdButtonSender - 1].ItemName,
                     Rare = gM.PlayerControler.Items[IdButtonSender - 1].Rare,
-                    IdInv = gM.PlayerControler.Items[IdButtonSender - 1].IdInv,
+                    Cost = gM.PlayerControler.Items[IdButtonSender - 1].Cost,
+                    //IdInv = gM.PlayerControler.Items[IdButtonSender - 1].IdInv,
+                    IdInv = gM.PlayerControler.Items[IdButtonZamiennik - 1].IdInv,
                     IdSprite = gM.PlayerControler.Items[IdButtonSender - 1].IdSprite
                 };
 
@@ -355,6 +361,7 @@ namespace EGOET
                 SelectedButton.Visibility = Visibility.Hidden;
 
                 gM.PlayerControler.Items[IdButtonSender - 1] = gM.PlayerControler.Items[IdButtonZamiennik - 1];
+                gM.PlayerControler.Items[IdButtonSender - 1].IdInv = Temp;
                 gM.PlayerControler.Items[IdButtonZamiennik - 1] = itemSender;
 
                 gM.button = null;

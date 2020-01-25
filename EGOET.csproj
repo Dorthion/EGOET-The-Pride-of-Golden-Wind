@@ -202,6 +202,9 @@
     <Resource Include="Resources\Fonts\dum1.ttf" />
     <Resource Include="Resources\Fonts\FantaisieArtistique.ttf" />
     <Resource Include="Resources\Fonts\Font.ttf" />
+    <Resource Include="Resources\Fight.png" />
+    <Content Include="Resources\Frame.png" />
+    <None Include="Resources\Gora.png" />
     <Content Include="Resources\IconMeme.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -240,7 +243,7 @@
     <Content Include="Sprites\Ruda_Krotkie.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Profiles\NPC.json" />
+    <Content Include="Resources\Profiles\NPC.json" />
     <Content Include="Resources\Tlo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
