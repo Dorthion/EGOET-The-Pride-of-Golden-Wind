@@ -21,8 +21,9 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
+        <Cursor x:Key="OpenHandCursor">..\..\Sprites\Cursor3.cur</Cursor>
     </Window.Resources>
-    <Grid Background="#FF12003A">
+    <Grid Background="#FF12003A" Cursor="{StaticResource OpenHandCursor}">
        <Label Content="Statistic"
                FontSize="40"
                Width="200"
@@ -40,7 +41,7 @@
         </Button>
 
         <Label Content="Nazwa: " Margin="10,105,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
-        <Label x:Name="Name" Margin="100,105,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label x:Name="NameHero" Margin="100,105,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
         <Label Content="Poziom: " Margin="10,135,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
         <Label x:Name="Level" Margin="110,135,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
         <Label Content="Doświadczenie: " Margin="10,165,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>

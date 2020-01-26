@@ -21,8 +21,9 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
+        <Cursor x:Key="OpenHandCursor">..\..\Sprites\Cursor3.cur</Cursor>
     </Window.Resources>
-    <Grid Background="#FF12003A">
+    <Grid Background="#FF12003A" Cursor="{StaticResource OpenHandCursor}">
         <Label Content="Rozdaj punkty" FontSize="40" Width="305" Height="80" Margin="35,0,0,0" Style="{StaticResource ChangeLabel}"/>
         <Button x:Name="ExitButton" VerticalAlignment="Top" Margin="345,20,10,0" Height="45" Click="ExitButton_Click">
             <Button.Background>

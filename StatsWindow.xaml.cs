@@ -11,7 +11,7 @@ namespace EGOET.Stats
         {
             InitializeComponent();
             mainWindow = window;
-            Name.Content = playerClass.Hero.Name;
+            NameHero.Content = playerClass.Hero.Name;
             Level.Content = playerClass.Hero.Poziom;
             Exp.Content = playerClass.Hero.ExpNow + "/" + playerClass.Hero.ExpToNextLvl;
             Hp.Content = playerClass.Hero.Hp + "/"+ playerClass.Hero.HpMax;

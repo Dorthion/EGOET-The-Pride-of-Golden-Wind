@@ -59,8 +59,6 @@ namespace EGOET.Informations
         public int PunktyUmiejetnosci { get; set; } = 0;
         public int IdMiasta { get; set; } = 0;
         public int Money { get; set; } = 0;
-        public int LastPositionX { get; set; } = 0;
-        public int LastPositionY { get; set; } = 0;
     }
 
     /// <summary>

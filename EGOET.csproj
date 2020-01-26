@@ -132,7 +132,6 @@
     </Compile>
     <Compile Include="Scripts\Fight.cs" />
     <Compile Include="Scripts\GameManager.cs" />
-    <Compile Include="Scripts\SingleAnimationMonster.cs" />
     <Compile Include="Scripts\Inventory.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\Monster.cs" />
@@ -214,10 +213,18 @@
     <Resource Include="Resources\Fonts\dum1.ttf" />
     <Resource Include="Resources\Fonts\FantaisieArtistique.ttf" />
     <Resource Include="Resources\Fonts\Font.ttf" />
-    <Resource Include="Resources\Fight.png" />
-    <None Include="Resources\adminIcon.png" />
-    <Content Include="Resources\Frame.png" />
-    <None Include="Resources\Gora.png" />
+    <Content Include="Resources\Fight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\adminIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Frame.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Gora.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\IconMeme.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -235,10 +242,18 @@
     <Content Include="csfml-window-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\SettingIcon.png" />
-    <None Include="Resources\statsIcon.png" />
-    <None Include="Resources\skillIcon.png" />
-    <None Include="Resources\MinusIcon.png" />
+    <Content Include="Resources\SettingIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\statsIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\skillIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\MinusIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\KingSnake.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

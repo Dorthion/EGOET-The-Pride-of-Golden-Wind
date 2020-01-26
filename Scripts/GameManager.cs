@@ -80,6 +80,9 @@ namespace EGOET.Scripts
 
         public GameManager()
         {
+            //Delete?
+            //PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("..\\..\\Resources\\Profiles\\"+PlayerControler.Username+".json"));
+            //In dev time:
             PlayerControler = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("..\\..\\Resources\\Profiles\\Admin.json"));
 
             var temp = JsonConvert.DeserializeObject<List<NPCclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\NPC" + PlayerControler.Hero.IdMiasta + ".json"));
@@ -105,8 +108,6 @@ namespace EGOET.Scripts
 
             //Nie potrzebne, wyczyść z pamięci
             inventory.ActionIcon = null;
-
-            SpawnPointPlayer();
         }
 
         internal void UpdateScreen(RenderWindow _renderWindow)
@@ -160,7 +161,6 @@ namespace EGOET.Scripts
                 {
                     this.conversation = null;
                     this.IsConvUp = false;
-                    //this.player.IsMoving = true;
                     this.IsPaused = false;
                 }
             }
@@ -178,7 +178,11 @@ namespace EGOET.Scripts
                         this.player.IsDead = true;
                         DeathScreen();
                     }
-
+                    this.PlayerControler.Hero.Hp = this.fight.player.Hero.Hp;
+                    this.PlayerControler.Hero.Money = this.fight.player.Hero.Money;
+                    this.PlayerControler.Hero.ExpNow = this.fight.player.Hero.ExpNow;
+                    this.PlayerControler.Hero.ExpToNextLvl = this.fight.player.Hero.ExpToNextLvl;
+                    this.PlayerControler.Hero.PunktyUmiejetnosci = this.fight.player.Hero.PunktyUmiejetnosci;
                     this.fight = null;
                     this.IsFighting = false;
                     this.IsPaused = false;
@@ -205,7 +209,7 @@ namespace EGOET.Scripts
         {
             deathRectangle = new RectangleShape()
             {
-                Size = new SFML.System.Vector2f(2000, 1500),
+                Size = new Vector2f(2000, 1500),
                 Position = new Vector2f(player.Xpos, player.Ypos),
                 FillColor = SFML.Graphics.Color.Black
             };
@@ -247,8 +251,8 @@ namespace EGOET.Scripts
 
         internal void SpawnPointPlayer()
         {
-            player.Xpos = PlayerControler.Hero.LastPositionX;
-            player.Ypos = PlayerControler.Hero.LastPositionY;
+            player.Xpos = worldinformation.SpawnPointX * 32;
+            player.Ypos = worldinformation.SpawnPointY * 32;
         }
 
         public void LoadInventory(MainWindow window)
@@ -268,7 +272,6 @@ namespace EGOET.Scripts
                     (ItemTypes)item.ItemName +
                     "\nRare:" + (ItemRare)item.Rare +
                     "\nCost: " + item.Cost;
-                    //"\nIdInv: " + item.IdInv;
                 temp.Background = brush;
                 temp.ToolTip = tooltip;
             }
@@ -277,8 +280,7 @@ namespace EGOET.Scripts
 
         public void SaveEq()
         {
-            //using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin3.json"))
-            using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\Admin.json"))
+            using (StreamWriter file = File.CreateText("..\\..\\Resources\\Profiles\\"+ PlayerControler.Username +".json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, PlayerControler);

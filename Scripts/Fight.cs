@@ -156,6 +156,7 @@ namespace EGOET.Scripts
                     dead = true;
                     deadmonster = true;
                     UpdateQuitText();
+                    UpdateLevel();
                     graveSprite.Position = new Vector2f(monsterSprite.Position.X, monsterSprite.Position.Y);
                 }
             }
@@ -188,6 +189,20 @@ namespace EGOET.Scripts
         {
             quitText = new Text("Wyjdz", font);
             quitText.Position = new Vector2f(716.0f, 620.0f);
+        }
+
+        private void UpdateLevel()
+        {
+            Random rand = new Random();
+
+            player.Hero.Money += rand.Next(monster.Level, monster.Level * 2);
+            player.Hero.ExpNow += rand.Next(monster.Level, monster.Level * 2);
+
+            if (player.Hero.ExpNow > player.Hero.ExpToNextLvl)
+            {
+                player.Hero.ExpNow -= player.Hero.ExpToNextLvl;
+                player.Hero.ExpToNextLvl += 100;
+            }
         }
 
         public void Draw(RenderWindow window)

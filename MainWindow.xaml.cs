@@ -158,8 +158,8 @@ namespace EGOET
             
             Loaded -= OnLoaded;
 
-            gM.LoadInventory(this);
             gM.LoadTown(this);
+            gM.LoadInventory(this);
             UpdateRenderScreenSettings();
 
             NicknameLabel.Content = gM.PlayerControler.Hero.Name.ToString() + " (" + gM.PlayerControler.Hero.Poziom.ToString() + "lvl)";
@@ -281,8 +281,21 @@ namespace EGOET
         {
             dynamiccamera = Properties.Settings.Default.DynamicCamera;
             gM.Mapa.GlebokoscOdswiezania = Properties.Settings.Default.RenderDistance;
+
             gamerunning = true;
         }
+
+        internal void UpdateStats(PlayerClass playerClass)
+        {
+            this.gM.PlayerControler.Hero.Hp = playerClass.Hero.Hp;
+            this.gM.PlayerControler.Hero.Sila = playerClass.Hero.Sila;
+            this.gM.PlayerControler.Hero.Magia = playerClass.Hero.Magia;
+            this.gM.PlayerControler.Hero.Obrona = playerClass.Hero.Obrona;
+            this.gM.PlayerControler.Hero.PunktyUmiejetnosci = playerClass.Hero.PunktyUmiejetnosci;
+
+            UpdateStatistics();
+        }
+
         private void DynamicCamera(float dt)
         {
             Vector2f movement = new Vector2f(gM.player.Xpos - view.Center.X, gM.player.Ypos - view.Center.Y);
@@ -442,8 +455,6 @@ namespace EGOET
             OptionWindow option = new OptionWindow(this);
             option.Show();
         }
-        #endregion
-
         private void SpawnButton_Click(object sender, RoutedEventArgs e)
         {
             this.gM.SpawnPointPlayer();
@@ -462,6 +473,14 @@ namespace EGOET
             StatsWindow stats = new StatsWindow(this.gM.PlayerControler, this);
             stats.Show();
         }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.gM = null;
+            GC.Collect();
+            gM = new GameManager();
+            UpdateStatistics();
+        }
+        #endregion
     }
 
     public static class CompositionTargetEx

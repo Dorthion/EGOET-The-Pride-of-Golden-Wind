@@ -8,10 +8,12 @@ namespace EGOET.Skills
     public partial class SkillWindow : MetroWindow
     {
         private MainWindow mainWindow;
+        private PlayerClass PlayerClass;
         public SkillWindow(PlayerClass playerClass, MainWindow window)
         {
             InitializeComponent();
             mainWindow = window;
+            PlayerClass = playerClass;
             Pkt.Content = playerClass.Hero.PunktyUmiejetnosci;
             Strength.Content = playerClass.Hero.Sila;
             Magic.Content = playerClass.Hero.Magia;
@@ -75,6 +77,14 @@ namespace EGOET.Skills
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.UpdateRenderScreenSettings();
+
+            PlayerClass.Hero.Sila = Convert.ToInt32(Strength.Content);
+            PlayerClass.Hero.Magia = Convert.ToInt32(Magic.Content);
+            PlayerClass.Hero.Obrona = Convert.ToInt32(Deff.Content);
+            PlayerClass.Hero.PunktyUmiejetnosci = Convert.ToInt32(Pkt.Content);
+
+            mainWindow.UpdateStats(PlayerClass);
+
             this.Close();
         }
     }
