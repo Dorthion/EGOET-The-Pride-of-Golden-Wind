@@ -70,35 +70,53 @@
         <Image Source="pack://siteoforigin:,,,/Resources/Tlo.png" Margin="0,0,0,0" Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill"/>
 
         <Grid Grid.Row="0" Grid.Column="0"  Margin="0,0,1,5">
-            <Button Name="ExitBtn" 
-                    
+            <Button Name="optionsButton" 
                     Margin="5,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" 
-                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Click="OpenOptions_Click">
-
+                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                    Style="{StaticResource Clear}" 
+                    Width="26" Click="OpenOptions_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SettingIcon.png"/>
+                </Button.Background>
             </Button>
-            <Button Name="ControlsBtn" 
-                    Content="Cont"
+            <Button Name="spawnButton" 
                     HorizontalAlignment="Left" 
                     Margin="35,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" Width="26"/>
-            <Button Name="OptionsBtn" 
-                    Content="Opt"
+                    Style="{StaticResource Clear}"
+                    Height="26" VerticalAlignment="Top" 
+                    Width="26" Click="SpawnButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SpawnIcon.png"/>
+                </Button.Background>
+            </Button>
+            <Button Name="skillButton" 
                     Margin="65,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" 
-                    HorizontalAlignment="Left" Width="26"/>
-            <Button Name="MusicBtn" 
-                    Content="Music"
+                    Style="{StaticResource Clear}" 
+                    Height="26" VerticalAlignment="Top" 
+                    HorizontalAlignment="Left" Width="26"
+                    Click="SkillButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/skillIcon.png"/>
+                </Button.Background>
+            </Button>
+            <Button Name="statsButton" 
                     Margin="95,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
-            <Button Name="FullscreenModeBtn" 
-                    Content="FS" 
+                    Style="{StaticResource Clear}"
+                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                    Width="26" Click="StatsButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/statsIcon.png"/>
+                </Button.Background>
+            </Button>
+            <Button Name="adminButton" 
                     Margin="125,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
-            <Button Name="SaveBtn" 
-                    Content="Ala" 
-                    Margin="155,5,0,0" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"/>
+                    Style="{StaticResource Clear}"
+                    Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26"
+                    Click="OpenAdminConsole_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/adminIcon.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
 
         <!-- Buttons: Up-Right Corner-->

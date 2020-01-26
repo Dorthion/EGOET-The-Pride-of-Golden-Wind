@@ -139,6 +139,12 @@
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Player.cs" />
     <Compile Include="Scripts\Waypoint.cs" />
+    <Compile Include="SkillWindow.xaml.cs">
+      <DependentUpon>SkillWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatsWindow.xaml.cs">
+      <DependentUpon>StatsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupportSFMLWindow.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -160,6 +166,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="OptionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,6 +215,7 @@
     <Resource Include="Resources\Fonts\FantaisieArtistique.ttf" />
     <Resource Include="Resources\Fonts\Font.ttf" />
     <Resource Include="Resources\Fight.png" />
+    <None Include="Resources\adminIcon.png" />
     <Content Include="Resources\Frame.png" />
     <None Include="Resources\Gora.png" />
     <Content Include="Resources\IconMeme.ico">
@@ -220,6 +235,10 @@
     <Content Include="csfml-window-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\SettingIcon.png" />
+    <None Include="Resources\statsIcon.png" />
+    <None Include="Resources\skillIcon.png" />
+    <None Include="Resources\MinusIcon.png" />
     <Content Include="Sprites\KingSnake.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

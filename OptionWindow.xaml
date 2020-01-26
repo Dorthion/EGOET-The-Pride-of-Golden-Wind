@@ -9,19 +9,19 @@
         mc:Ignorable="d"
         UseNoneWindowStyle="true"
         IgnoreTaskbarOnMaximize="True"
-        Height="600" Width="400" 
+        Height="250" Width="400" 
         WindowStyle="None" ShowInTaskbar="False" 
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner" 
         Topmost="True" Loaded="OptDialog_Loaded">
     <Grid Background="#FF12003A">
         <Slider x:Name="SliderRenderDistance" 
                 Minimum="1" Maximum="20"
-                Width="200" Height="20" Margin="40,118,160,462" 
+                Width="200" Height="20" Margin="40,118,160,0" 
                 mah:SliderHelper.TrackValueFillBrush="#CC11DA2C" 
                 mah:SliderHelper.TrackValueFillHoverBrush="#FF41E156" 
                 mah:SliderHelper.TrackValueFillPressedBrush="#FF41E156" 
                 mah:SliderHelper.ThumbFillBrush="#FF8B4D0F" 
-                ValueChanged="SliderRenderDistance_ValueChanged" SmallChange="1"
+                ValueChanged="SliderRenderDistance_ValueChanged" SmallChange="1" VerticalAlignment="Top"
                 />
         <Label Content="OPTIONS"
                FontSize="40"
@@ -30,7 +30,7 @@
                VerticalContentAlignment="Center"
                Width="200"
                Height="80"
-               Margin="100,0,100,520"
+               Margin="100,0" VerticalAlignment="Top"
                />
         <Button x:Name="ExitButton" 
                 VerticalAlignment="Top" 

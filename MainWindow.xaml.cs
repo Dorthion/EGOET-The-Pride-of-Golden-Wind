@@ -1,6 +1,8 @@
 ﻿using EGOET.Informations;
 using EGOET.Options;
 using EGOET.Scripts;
+using EGOET.Skills;
+using EGOET.Stats;
 using MahApps.Metro.Controls;
 using SFML.Graphics;
 using SFML.System;
@@ -441,6 +443,25 @@ namespace EGOET
             option.Show();
         }
         #endregion
+
+        private void SpawnButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.gM.SpawnPointPlayer();
+        }
+
+        private void SkillButton_Click(object sender, RoutedEventArgs e)
+        {
+            gamerunning = false;
+            SkillWindow skill = new SkillWindow(this.gM.PlayerControler, this);
+            skill.Show();
+        }
+
+        private void StatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            gamerunning = false;
+            StatsWindow stats = new StatsWindow(this.gM.PlayerControler, this);
+            stats.Show();
+        }
     }
 
     public static class CompositionTargetEx

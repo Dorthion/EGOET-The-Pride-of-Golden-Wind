@@ -1,0 +1,86 @@
+﻿<Controls:MetroWindow 
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EGOET.Skills"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Name="SkillDialog" x:Class="EGOET.Skills.SkillWindow"
+        mc:Ignorable="d"
+        UseNoneWindowStyle="true"
+        IgnoreTaskbarOnMaximize="True"
+        Height="270" Width="400" 
+        WindowStyle="None" ShowInTaskbar="False" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" 
+        Topmost="True">
+    <Window.Resources>
+        <Style x:Key="ChangeLabel" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF12003A">
+        <Label Content="Rozdaj punkty" FontSize="40" Width="305" Height="80" Margin="35,0,0,0" Style="{StaticResource ChangeLabel}"/>
+        <Button x:Name="ExitButton" VerticalAlignment="Top" Margin="345,20,10,0" Height="45" Click="ExitButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/ExitIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Label Content="Ilość punktów do rozdania: " Margin="10,90,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label x:Name="Pkt" Margin="320,95,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label Content="Siła" Margin="48,135,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label x:Name="Strength" Margin="200,135,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label Content="Magia" Margin="35,165,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label x:Name="Magic" Margin="200,165,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label Content="Obrona" Margin="27,195,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        <Label x:Name="Deff" Margin="200,195,0,0" FontSize="25" Style="{StaticResource ChangeLabel}"/>
+        
+        <Button x:Name="AddToStrength" HorizontalAlignment="Left" Margin="160,145,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="AddToStrength_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SkillIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Button x:Name="MinusToStrength" HorizontalAlignment="Left" Margin="245,145,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MinusToStrength_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/MinusIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Button x:Name="AddToMagic" HorizontalAlignment="Left" Margin="160,175,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="AddToMagic_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SkillIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Button x:Name="MinusToMagic" HorizontalAlignment="Left" Margin="245,175,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MinusToMagic_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/MinusIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Button x:Name="AddToDeff" HorizontalAlignment="Left" Margin="160,205,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="AddToDeff_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/SkillIcon.png"/>
+            </Button.Background>
+        </Button>
+
+        <Button x:Name="MinusToDeff" HorizontalAlignment="Left" Margin="245,205,0,0" VerticalAlignment="Top" Width="25" Height="25"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MinusToDeff_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/MinusIcon.png"/>
+            </Button.Background>
+        </Button>
+
+
+    </Grid>
+</Controls:MetroWindow>
