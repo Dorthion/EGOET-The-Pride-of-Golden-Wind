@@ -134,12 +134,10 @@
     <Compile Include="Scripts\GameManager.cs" />
     <Compile Include="Scripts\SingleAnimationMonster.cs" />
     <Compile Include="Scripts\Items\Inventory.cs" />
-    <Compile Include="Scripts\Items\Sword.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\Monster.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Player.cs" />
-    <Compile Include="Scripts\Statistic.cs" />
     <Compile Include="Scripts\Waypoint.cs" />
     <Compile Include="SupportSFMLWindow.cs">
       <SubType>Component</SubType>

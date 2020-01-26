@@ -8,6 +8,9 @@ namespace EGOET.Scripts
 {
     class Fight
     {
+        private bool dead = false;
+        private bool deadplayer = false;
+        private bool deadmonster = false;
         private int attackPer = 1000;
         private int counter = 0;
         private float HpMonster;
@@ -18,7 +21,6 @@ namespace EGOET.Scripts
         private readonly Text quitText;
         private readonly Text monsterText;
         private readonly Text playerattackText;
-        //private readonly Text monsterHpText;
 
         private readonly Sprite playerSprite;
         private readonly Sprite monsterSprite;
@@ -26,6 +28,7 @@ namespace EGOET.Scripts
         private readonly Sprite logSprite;
         private readonly Sprite moredmgSprite;
         private readonly Sprite moredefSprite;
+        private readonly Sprite graveSprite;
         private readonly Sprite quitSprite;
         private readonly Sprite battlegroundSprite;
 
@@ -54,6 +57,7 @@ namespace EGOET.Scripts
             Texture LoadBattleground = new Texture(@"..\..\Resources\BattlegroundForest.png");
             Texture ButtonBackground = new Texture(@"..\..\Resources\Fight.png");
             Texture ButtonTexture = new Texture(@"..\..\Resources\Button.png");
+            Texture Grave = new Texture(@"..\..\Resources\Grave.png");
             Texture texture = new Texture(_player.Hero.SpritePath);
             Texture texture2 = new Texture(_monster.SpritePath);
             Random random = new Random();
@@ -78,6 +82,7 @@ namespace EGOET.Scripts
             moredefSprite = new Sprite(ButtonTexture);
             moredmgSprite = new Sprite(ButtonTexture);
             quitSprite = new Sprite(ButtonTexture);
+            graveSprite = new Sprite(Grave);
 
             battlegroundSprite.Position = new Vector2f(400.0f, 150.0f);
             playerSprite.Position = new Vector2f(660.0f, 400.0f);
@@ -104,6 +109,7 @@ namespace EGOET.Scripts
             buttonSprite.Scale = new Vector2f(0.25f, 0.25f);
             logSprite.Scale = new Vector2f(0.64f, 0.55f);
             quitSprite.Scale = new Vector2f(0.25f, 0.25f);
+            graveSprite.Scale = new Vector2f(0.25f, 0.25f);
 
             buttonBounds = buttonSprite.GetGlobalBounds();
             moredefBound = moredefSprite.GetGlobalBounds();
@@ -136,9 +142,20 @@ namespace EGOET.Scripts
         {
             Vector2f mousepos = window.MapPixelToCoords(Mouse.GetPosition(window));
 
-            if (Mouse.IsButtonPressed(Mouse.Button.Left) && buttonBounds.Contains(mousepos.X, mousepos.Y))
+            if (Mouse.IsButtonPressed(Mouse.Button.Left) && buttonBounds.Contains(mousepos.X, mousepos.Y) && dead == false)
             {
-                DisableFight = true;
+                HpMonster -= (player.Hero.Sila / 2) + ((player.Hero.Sila / 2) / monster.Obrona);
+                if(HpMonster > 0)
+                {
+                    mhpRactangle.Size = new Vector2f((float)(HpMonster / (float)monster.Hp) * 200.0f, mhpRactangle.Size.Y);
+                } 
+                else
+                {
+                    mhpRactangle.Size = new Vector2f(0.0f, 0.0f);
+                    dead = true;
+                    deadmonster = true;
+                    graveSprite.Position = new Vector2f(monsterSprite.Position.X, monsterSprite.Position.Y);
+                }
             }
 
             if (Mouse.IsButtonPressed(Mouse.Button.Left) && quitBounds.Contains(mousepos.X, mousepos.Y))
@@ -146,11 +163,20 @@ namespace EGOET.Scripts
                 DisableFight = true;
             }
 
-            if (counter > attackPer)
+            if (counter > attackPer && dead == false)
             {
                 player.Hero.Hp -= (monster.Sila / 2) + ((monster.Sila / 2) / player.Hero.Obrona);
-                phpRactangle.Size = new Vector2f((float)((float)player.Hero.Hp / (float)player.Hero.HpMax) * 200.0f, phpRactangle.Size.Y);
-                counter = 0;
+                if(player.Hero.Hp > 0)
+                {
+                    phpRactangle.Size = new Vector2f((float)((float)player.Hero.Hp / (float)player.Hero.HpMax) * 200.0f, phpRactangle.Size.Y);
+                    counter = 0;
+                } else
+                {
+                    phpRactangle.Size = new Vector2f(0.0f, 0.0f);
+                    dead = true;
+                    deadplayer = true;
+                    graveSprite.Position = new Vector2f(660.0f, 400.0f);
+                }
             }
             else counter++;
         }
@@ -161,8 +187,6 @@ namespace EGOET.Scripts
 
             window.Draw(drawable: battlegroundSprite);
             window.Draw(drawable: mainRactangle);
-            window.Draw(drawable: playerSprite);
-            window.Draw(drawable: monsterSprite);
             window.Draw(drawable: buttonSprite);
             window.Draw(drawable: logSprite);
             window.Draw(drawable: moredmgSprite);
@@ -170,6 +194,14 @@ namespace EGOET.Scripts
             window.Draw(drawable: quitSprite);
             window.Draw(drawable: phpRactangle);
             window.Draw(drawable: mhpRactangle);
+
+            if (!deadplayer)
+                window.Draw(drawable: playerSprite);
+            else window.Draw(drawable: graveSprite);
+
+            if (!deadmonster)
+                window.Draw(drawable: monsterSprite);
+            else window.Draw(drawable: graveSprite);
 
             window.Draw(drawable: attackText);
             window.Draw(drawable: monsterText);

@@ -20,7 +20,7 @@ namespace EGOET.Scripts.Conversations
 
         public Conversation(int startConv, int endConv)
         {
-            var textToDisplay = File.ReadAllLines(@"D:\Programowanie\EGOET\EGOET-The-Pride-of-Golden-Wind\Scripts\Conversations\GuildGuy.txt");
+            var textToDisplay = File.ReadAllLines(@"..\..\Scripts\Conversations\GuildGuy.txt");
             Texture texture = new Texture(@"..\..\Resources\Fight.png");
             font = new Font(@"..\..\Resources\Fonts\Font.ttf");
             ConvRectangle = new RectangleShape()

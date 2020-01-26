@@ -39,7 +39,6 @@ namespace EGOET
         #region OnLoad
         public MainWindow()
         {
-            //if(!File.Exists(@"Logs"))
             Directory.CreateDirectory("Logs");
             using (StreamWriter file = File.AppendText(@"Logs\LogStartUp.txt"))
             {
@@ -229,8 +228,6 @@ namespace EGOET
             //Display
             this._renderWindow.Display();
         }
-
-
 
         #region PrivateMethods
         private void TestWydajnosci(object sender, EventArgs e)
