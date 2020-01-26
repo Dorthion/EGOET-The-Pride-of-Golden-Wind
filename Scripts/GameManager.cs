@@ -77,7 +77,7 @@ namespace EGOET.Scripts
             for (int i=0; i<NumberOfNPC; i++)
                 kip[i] = new NPC(temp.Find(x => x.Id == i+1).SpritePath, temp.Find(x => x.Id == i+1));
 
-            var temp2 = JsonConvert.DeserializeObject<List<Monsterclass>>(File.ReadAllText("..\\..\\Resources\\Towns\\Monsters" + PlayerControler.Hero.IdMiasta + ".json"));
+            var temp2 = JsonConvert.DeserializeObject<List<MonsterClass>>(File.ReadAllText("..\\..\\Resources\\Towns\\Monsters" + PlayerControler.Hero.IdMiasta + ".json"));
             for (int i = 0; i < NumberOfMonsters; i++)
                 monsters[i] = new Monster(temp2.Find(x => x.Id == i + 1).SpritePath, temp2.Find(x => x.Id == i + 1));
 
@@ -113,7 +113,7 @@ namespace EGOET.Scripts
 
             foreach (var mon in monsters)
             {
-                if (this.Mapa.playerView[(int)(mon.Xpos + 32) / 32, (int)(mon.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(mon.Xpos) / 32, (int)(mon.Ypos) / 32] == true)
+                if (this.Mapa.playerView[(int)(mon.Xpos + 32) / 32, (int)(mon.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(mon.Xpos) / 32, (int)(mon.Ypos) / 32] == true && mon.IsDead == false)
                     mon.Draw(_renderWindow);
             }
 
@@ -156,7 +156,8 @@ namespace EGOET.Scripts
             if (this.IsFighting == true)
             {
                 this.fight.Draw(_renderWindow);
-                this.fight.Update();
+                this.fight.Update(_renderWindow);
+                
 
                 if (this.fight.DisableFight == true)
                 {
@@ -194,7 +195,7 @@ namespace EGOET.Scripts
                 i++;
             }
 
-            fight = new Fight(PlayerControler.Hero.SpritePath, monsters[i-1].monsterclass.SpritePath);
+            fight = new Fight(PlayerControler, monsters[i-1].monsterclass);
             this.IsFighting = true;
         }
 

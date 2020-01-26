@@ -94,11 +94,58 @@ namespace EGOET
         }
         public MainWindow(PlayerClass _player)
         {
-            InitializeComponent();
-            clock = new Clock();
-            gM.PlayerControler = _player;
+            Directory.CreateDirectory("Logs");
+            using (StreamWriter file = File.AppendText(@"Logs\LogStartUp.txt"))
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                file.WriteLine(DateTime.Now + ": [Loading Game]");
+                InitializeComponent();
+                file.WriteLine(DateTime.Now + ": Loading Main Window... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                Loaded += OnLoaded;
 
-           // CreateRenderWindow();
+                ContextSettings context = new ContextSettings()
+                {
+                    AttributeFlags = ContextSettings.Attribute.Default,
+                    MajorVersion = 4,
+                    MinorVersion = 6,
+                    DepthBits = 0,
+                    StencilBits = 0,
+                    AntialiasingLevel = 0
+                };
+
+                file.WriteLine(DateTime.Now + ": Loading OnLoaded... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
+                this._renderWindow.SetMouseCursorVisible(false);
+
+                file.WriteLine(DateTime.Now + ": Loading SFML Render Window... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                DrawSurface.Cursor = new System.Windows.Forms.Cursor("..\\..\\Sprites\\Cursor3.cur");
+
+                file.WriteLine(DateTime.Now + ": Set Custom Cursor... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                CompositionTargetEx.Rendering += Timer_Tick;
+                CompositionTargetEx.Rendering += TestWydajnosci;
+
+                file.WriteLine(DateTime.Now + ": Set Rendering Components... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                stopWatch.Restart();
+                gM = new GameManager();
+                gM.PlayerControler = _player;
+                UpdateStatistics();
+                clock = new Clock();
+                clocklog = new Clock();
+
+                file.WriteLine(DateTime.Now + ": Loading Other Components... (" + stopWatch.ElapsedMilliseconds + " ms)");
+                file.WriteLine(DateTime.Now + ": [Done Loading]\n");
+                stopWatch.Stop();
+            };
+
+            using (StreamWriter file = File.AppendText(@"Logs\Log SFML " + DateTime.Today.ToShortDateString() + ".txt"))
+            {
+                file.WriteLine(DateTime.Now + "[Game Started]");
+            };
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -238,8 +285,8 @@ namespace EGOET
             this.Defense.Content = this.gM.PlayerControler.Hero.Obrona;
             this.MaxHP.Content = this.gM.PlayerControler.Hero.HpMax;
 
-            this.HpCounter.Height = (this.gM.PlayerControler.Hero.Hp / this.gM.PlayerControler.Hero.HpMax) * 150;
-            this.ExpCounter.Height = (this.gM.PlayerControler.Hero.ExpNow / this.gM.PlayerControler.Hero.ExpToNextLvl) * 150;
+            this.HpCounter.Height = (float)((float)this.gM.PlayerControler.Hero.Hp / (float)this.gM.PlayerControler.Hero.HpMax) * 150;
+            this.ExpCounter.Height = (float)((float)this.gM.PlayerControler.Hero.ExpNow / (float)this.gM.PlayerControler.Hero.ExpToNextLvl) * 150;
         }
         #endregion
 

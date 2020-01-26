@@ -18,7 +18,7 @@ namespace EGOET.Scripts
 
         private void FollowWayPoints()
         {
-            if(Waypoints != null)
+            if(Waypoints != null && Waypoints.Count != 0)
             {
                 Waypoint nextWaypoint = Waypoints[nextWaypointIndex];
 

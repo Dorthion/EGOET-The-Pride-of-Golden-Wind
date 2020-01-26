@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EGOET.Scripts
 {
-    class Waypoint
+    public class Waypoint
     {
         public float XPos;
         public float YPos;

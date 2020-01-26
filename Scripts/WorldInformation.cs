@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EGOET.Scripts;
+using System.Collections.Generic;
 namespace EGOET.Informations
 {
     /// <summary>
@@ -89,13 +90,14 @@ namespace EGOET.Informations
         public int CurrentMovement { get; set; }
         public int XPos { get; set; }
         public int YPos { get; set; }
+        public List<Waypoint> Waypoints { get; set; }
     }
 
     /// <summary>
     /// Dane o przeciwniku
     /// </summary>
     [System.Serializable]
-    public class Monsterclass
+    public class MonsterClass
     {
         public int Id { get; set; }
         public string Name { get; set; }

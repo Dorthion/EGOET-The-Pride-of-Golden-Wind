@@ -17,6 +17,7 @@ namespace EGOET.Scripts
             Ypos = npcclass.YPos * 32;
 
             npc = npcclass;
+            Waypoints = npc.Waypoints;
         }
     }
 }
