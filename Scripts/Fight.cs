@@ -15,10 +15,10 @@ namespace EGOET.Scripts
         private int counter = 0;
         private float HpMonster;
 
+        private Text quitText;
         private readonly Text attackText;
         private readonly Text moredmgText;
         private readonly Text moredefText;
-        private readonly Text quitText;
         private readonly Text monsterText;
         private readonly Text playerattackText;
 
@@ -32,9 +32,10 @@ namespace EGOET.Scripts
         private readonly Sprite quitSprite;
         private readonly Sprite battlegroundSprite;
 
+        internal readonly PlayerClass player;
+        internal readonly MonsterClass monster;
+
         private readonly Font font;
-        private readonly PlayerClass player;
-        private readonly MonsterClass monster;
         private readonly RectangleShape mainRactangle;
         private readonly RectangleShape phpRactangle;
         private readonly RectangleShape mhpRactangle;
@@ -154,6 +155,7 @@ namespace EGOET.Scripts
                     mhpRactangle.Size = new Vector2f(0.0f, 0.0f);
                     dead = true;
                     deadmonster = true;
+                    UpdateQuitText();
                     graveSprite.Position = new Vector2f(monsterSprite.Position.X, monsterSprite.Position.Y);
                 }
             }
@@ -175,10 +177,17 @@ namespace EGOET.Scripts
                     phpRactangle.Size = new Vector2f(0.0f, 0.0f);
                     dead = true;
                     deadplayer = true;
+                    UpdateQuitText();
                     graveSprite.Position = new Vector2f(660.0f, 400.0f);
                 }
             }
             else counter++;
+        }
+
+        private void UpdateQuitText()
+        {
+            quitText = new Text("Wyjdz", font);
+            quitText.Position = new Vector2f(716.0f, 620.0f);
         }
 
         public void Draw(RenderWindow window)

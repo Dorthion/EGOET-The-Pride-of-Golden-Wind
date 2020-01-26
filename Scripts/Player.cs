@@ -6,6 +6,7 @@ namespace EGOET
     {
         private int[,] _tab;
 
+        internal bool IsDead = false;
         internal bool IsActionNear = false;
         internal bool IsActionWithChest = false;
         internal bool IsActionWithNPC = false;

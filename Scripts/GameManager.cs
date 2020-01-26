@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System;
+using SFML.System;
 
 namespace EGOET.Scripts
 {
@@ -55,6 +56,7 @@ namespace EGOET.Scripts
         internal bool IsConvUp = false;
         internal bool IsFighting = false;
         internal bool IsPaused = false;
+        internal bool NeedToUpdate = false;
 
         internal Map Mapa;
         internal Player player;
@@ -68,6 +70,13 @@ namespace EGOET.Scripts
         internal WorldInformation worldinformation;
         internal NPC[] kip = new NPC[NumberOfNPC];
         internal Monster[] monsters = new Monster[NumberOfMonsters];
+
+        internal Clock deathClock;
+        private static Font font;
+        private static Text deathText;
+        private static Text deathText2;
+        private static RectangleShape deathRectangle;
+
 
         public GameManager()
         {
@@ -103,39 +112,42 @@ namespace EGOET.Scripts
         internal void UpdateScreen(RenderWindow _renderWindow)
         {
             //Always render:
-            this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32));
-
-            foreach(var npc in kip)
+            if(this.IsFighting == false)
             {
-                if(this.Mapa.playerView[(int)(npc.Xpos + 32) / 32, (int)(npc.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(npc.Xpos) / 32, (int)(npc.Ypos) / 32] == true)
-                    npc.Draw(_renderWindow);
-            }
+                this.Mapa.Draw(_renderWindow, (int)(player.Xpos / 32), (int)(player.Ypos / 32));
 
-            foreach (var mon in monsters)
-            {
-                if (this.Mapa.playerView[(int)(mon.Xpos + 32) / 32, (int)(mon.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(mon.Xpos) / 32, (int)(mon.Ypos) / 32] == true && mon.IsDead == false)
-                    mon.Draw(_renderWindow);
-            }
-
-            this.player.Draw(_renderWindow);
-
-            if (player.IsActionNear == true)
-                this.action.Draw(_renderWindow);
-
-            //Status Conversation
-            if (Keyboard.IsKeyPressed(Keyboard.Key.E) && !IsPaused)
-            {
-                if (this.player.IsActionWithNPC == true)
+                foreach(var npc in kip)
                 {
-                    CreateConversation();
-                    IsPaused = true;
+                    if(this.Mapa.playerView[(int)(npc.Xpos + 32) / 32, (int)(npc.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(npc.Xpos) / 32, (int)(npc.Ypos) / 32] == true)
+                        npc.Draw(_renderWindow);
                 }
 
-                if (this.player.IsFighting == true)
+                foreach (var mon in monsters)
                 {
-                    CreateBattleground();
-                    fight.view.Zoom(0.5f);
-                    this.IsPaused = true;
+                    if (this.Mapa.playerView[(int)(mon.Xpos + 32) / 32, (int)(mon.Ypos + 32) / 32] == true && this.Mapa.playerView[(int)(mon.Xpos) / 32, (int)(mon.Ypos) / 32] == true && mon.IsDead == false)
+                        mon.Draw(_renderWindow);
+                }
+
+                this.player.Draw(_renderWindow);
+
+                if (player.IsActionNear == true)
+                    this.action.Draw(_renderWindow);
+
+                //Status Conversation
+                if (Keyboard.IsKeyPressed(Keyboard.Key.E) && !IsPaused)
+                {
+                    if (this.player.IsActionWithNPC == true)
+                    {
+                        CreateConversation();
+                        IsPaused = true;
+                    }
+
+                    if (this.player.IsFighting == true)
+                    {
+                        CreateBattleground();
+                        fight.view.Zoom(0.5f);
+                        this.IsPaused = true;
+                    }
                 }
             }
 
@@ -161,9 +173,14 @@ namespace EGOET.Scripts
 
                 if (this.fight.DisableFight == true)
                 {
+                    if (this.fight.player.Hero.Hp < 0)
+                    {
+                        this.player.IsDead = true;
+                        DeathScreen();
+                    }
+
                     this.fight = null;
                     this.IsFighting = false;
-                    //this.player.IsMoving = true;
                     this.IsPaused = false;
                 }
             }
@@ -184,6 +201,35 @@ namespace EGOET.Scripts
             this.IsConvUp = true;
         }
 
+        private void DeathScreen()
+        {
+            deathRectangle = new RectangleShape()
+            {
+                Size = new SFML.System.Vector2f(2000, 1500),
+                Position = new Vector2f(player.Xpos, player.Ypos),
+                FillColor = SFML.Graphics.Color.Black
+            };
+
+            deathClock = new Clock();
+            font = new Font(@"..\..\Resources\Fonts\FantaisieArtistique.ttf");
+            deathText = new Text("Umarles!", font);
+            deathText.Position = new Vector2f(player.Xpos + 500.0f, player.Ypos + 200.0f);
+        }
+
+        internal void UpdateDeathScreen(RenderWindow window)
+        {
+            float deltatime = deathClock.ElapsedTime.AsSeconds();
+            float temp = 3.0f - deltatime;
+
+            deathText2 = new Text("Powstaniesz za: " + temp + "s", font);
+            deathText2.Position = new Vector2f(player.Xpos + 400.0f, player.Ypos + 400.0f);
+            PlayerControler.Hero.Hp = 1;
+
+            window.Draw(drawable: deathRectangle);
+            window.Draw(drawable: deathText);
+            window.Draw(drawable: deathText2);
+        }
+
         private void CreateBattleground()
         {
             GC.Collect();
@@ -199,7 +245,7 @@ namespace EGOET.Scripts
             this.IsFighting = true;
         }
 
-        private void SpawnPointPlayer()
+        internal void SpawnPointPlayer()
         {
             player.Xpos = PlayerControler.Hero.LastPositionX;
             player.Ypos = PlayerControler.Hero.LastPositionY;

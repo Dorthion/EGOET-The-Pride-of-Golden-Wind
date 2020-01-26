@@ -133,7 +133,7 @@
     <Compile Include="Scripts\Fight.cs" />
     <Compile Include="Scripts\GameManager.cs" />
     <Compile Include="Scripts\SingleAnimationMonster.cs" />
-    <Compile Include="Scripts\Items\Inventory.cs" />
+    <Compile Include="Scripts\Inventory.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\Monster.cs" />
     <Compile Include="Scripts\NPC.cs" />

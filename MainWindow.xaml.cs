@@ -198,7 +198,22 @@ namespace EGOET
         private void Timer_Tick(object sender, EventArgs e)
         {
             float deltatime = clock.Restart().AsSeconds();
-            
+
+            if (gM.player.IsDead)
+            {
+                if(3.0f - this.gM.deathClock.ElapsedTime.AsSeconds() > 0.0f)
+                {
+                    this.gM.UpdateDeathScreen(_renderWindow);
+                    this._renderWindow.Display();
+                    return;
+                } else
+                {
+                    this.gM.player.IsDead = false;
+                    this.gM.SpawnPointPlayer();
+                }
+                
+            }
+
             //Center View
             if (!gM.IsFighting)
             {
@@ -228,6 +243,7 @@ namespace EGOET
             //Display
             this._renderWindow.Display();
         }
+
 
         #region PrivateMethods
         private void TestWydajnosci(object sender, EventArgs e)
