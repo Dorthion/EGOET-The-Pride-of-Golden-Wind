@@ -19,18 +19,25 @@ namespace EGOET
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            PlayerClass Dane = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText("C:\\Users\\Dorthion\\Desktop\\" + LoginBox.Text + ".json"));
-            if(!Check_Settings())
-                return;
-            if (Dane.Username == LoginBox.Text && Dane.Password == PasswordBox.Password)
+            PlayerClass Dane;
+            try
             {
-                Console.WriteLine("Ok");
-
-                MainWindow Gra = new MainWindow(Dane);
-                this.Close();
-                Gra.Show();
+                Dane = JsonConvert.DeserializeObject<PlayerClass>(File.ReadAllText(@"..\..\Resources\Profiles\" + LoginBox.Text + ".json"));
+                if (!Check_Settings())
+                    return;
+                if (Dane.Username == LoginBox.Text && Dane.Password == PasswordBox.Password)
+                {
+                    MainWindow Gra = new MainWindow(Dane);
+                    this.Close();
+                    Gra.Show();
+                }
+                else
+                {
+                    LoadDesc.Visibility = Visibility.Visible;
+                    LoadDesc.Content = "Wprowadzono błędne dane!";
+                }
             }
-            else
+            catch (Exception)
             {
                 LoadDesc.Visibility = Visibility.Visible;
                 LoadDesc.Content = "Wprowadzono błędne dane!";
@@ -39,7 +46,7 @@ namespace EGOET
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            if(!File.Exists("C:\\Users\\Dorthion\\Desktop\\" + LoginBox.Text + ".json") && 
+            if(!File.Exists(@"..\..\Resources\Profiles\" + LoginBox.Text + ".json") && 
                 LoginBox.Text != "" && 
                 PasswordBox.Password != "")
             {
@@ -50,7 +57,13 @@ namespace EGOET
                         Username = LoginBox.Text,
                         Password = PasswordBox.Password
                     };
-                    File.WriteAllText("C:\\Users\\Dorthion\\Desktop\\" + LoginBox.Text + ".json", JsonConvert.SerializeObject(NewAcc));
+
+                    for (int i = 1; i <= 33; i++)
+                        NewAcc.Items.Add(new Item() { IdInv = i });
+
+                    NewAcc.Hero.Name = NewAcc.Username;
+
+                    File.WriteAllText(@"..\..\Resources\Profiles\" + LoginBox.Text + ".json", JsonConvert.SerializeObject(NewAcc));
                     LoadDesc.Visibility = Visibility.Visible;
                     LoadDesc.Content = "Registered Account!";
                 }

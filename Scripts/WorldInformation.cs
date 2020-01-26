@@ -27,8 +27,8 @@ namespace EGOET.Informations
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public HeroClass Hero { get; set; }
-        public List<Item> Items { get; set; }
+        public HeroClass Hero { get; set; } = new HeroClass();
+        public List<Item> Items { get; set; } = new List<Item>();
     }
 
     /// <summary>
@@ -41,24 +41,24 @@ namespace EGOET.Informations
     {
         //Podstawowe informacje
         public string Name { get; set; } = "";
-        public int Poziom { get; set; } = 0;
+        public int Poziom { get; set; } = 1;
 
         //Statystyki Bohatera
         public int ExpNow { get; set; } = 0;
-        public int ExpToNextLvl { get; set; } = 0;
-        public int Hp { get; set; } = 0;
-        public int HpMax { get; set; } = 0;
+        public int ExpToNextLvl { get; set; } = 100;
+        public int Hp { get; set; } = 100;
+        public int HpMax { get; set; } = 100;
 
         //Statystyki Umiejętności
-        public int Sila { get; set; } = 0;
-        public int Magia { get; set; } = 0;
-        public int Obrona { get; set; } = 0;
+        public int Sila { get; set; } = 5;
+        public int Magia { get; set; } = 5;
+        public int Obrona { get; set; } = 10;
 
         //Dodatkowe Statystyki (Reszta)
-        public string SpritePath { get; set; }
+        public string SpritePath { get; set; } = "..\\..\\Sprites\\Ruda_Dlugie.png";
         public int PunktyUmiejetnosci { get; set; } = 0;
         public int IdMiasta { get; set; } = 0;
-        public int Money { get; set; } = 0;
+        public int Money { get; set; } = 10;
     }
 
     /// <summary>
@@ -67,12 +67,12 @@ namespace EGOET.Informations
     [System.Serializable]
     public class Item
     {
-        public int Type { get; set; }
-        public int ItemName { get; set; }
-        public int Rare { get; set; }
-        public int Cost { get; set; }
-        public int IdInv { get; set; }
-        public int IdSprite { get; set; }
+        public int Type { get; set; } = 0;
+        public int ItemName { get; set; } = 0;
+        public int Rare { get; set; } = 0;
+        public int Cost { get; set; } = 0;
+        public int IdInv { get; set; } = 0;
+        public int IdSprite { get; set; } = 14;
     }
 
     /// <summary>
